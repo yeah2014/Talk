@@ -10,6 +10,7 @@ public class Forget implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String account;
 	private String question;
 	private String answer;
 	public String getQuestion() {
@@ -23,6 +24,12 @@ public class Forget implements Serializable {
 	}
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
 	}
 	
 }

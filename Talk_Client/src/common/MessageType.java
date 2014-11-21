@@ -9,7 +9,7 @@ public class MessageType implements Serializable{
 	 * flag = 1时，Users载入数据，即用来验证登陆;
 	 * flag = 2时，Message 载入数据，即发送普通消息;
 	 * flag = 3时，Image 载入数据，即发送图片;
-	 * flag = 4时，Userdata 载入数据，即注册;
+	 * flag = 4时，Users 载入数据，即注册;
 	 * flag = 5时，Forget 载入数据，即找回密码;
 	 * flag = 6时，Users载入数据，即修改密码;
 	 * temp对应多少就有多少个人在相应的列表

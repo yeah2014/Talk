@@ -1,7 +1,6 @@
 package control;
 import java.net.*;
 import java.io.*;
-
 import mysql.*;
 import view.*;
 public class Connect extends Thread{
@@ -13,9 +12,10 @@ public class Connect extends Thread{
 	public void run()
 	{
 		try {
-		new Dao();
+		Dao.dao1();
 		ss = new ServerSocket(8888);	
 		ServerView.appendtoserver("服务器在8888端口监听中......");
+		ServerView.appendtoserver("连接数据库成功!");
 		while(true)
 		{
 			s = ss.accept();

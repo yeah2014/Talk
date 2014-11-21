@@ -7,13 +7,13 @@ public class Addonline implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] onlinepeople;
+	private Onlinepeople[] onlinepeople;
 
-	public String[] getOnlinepeople() {
+	public Onlinepeople[] getOnlinepeople() {
 		return onlinepeople;
 	}
 
-	public void setOnlinepeople(String[] onlinepeople) {
+	public void setOnlinepeople(Onlinepeople[] onlinepeople) {
 		this.onlinepeople = onlinepeople;
 	}
 	

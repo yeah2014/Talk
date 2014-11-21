@@ -1,73 +1,59 @@
 package view;
 import javax.swing.*;
-
-
 import java.awt.*;
 import java.awt.event.*;
-
-import java.net.*;
-import java.io.*;
 
 
 public class demo extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4064124909812386914L;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new demo();
+		new demo(new JPanel());
 	}
 
 			
 //			定义组件
 //			面板
-			JPanel back,head,body,top,act;
+			JPanel back,head,body,top;
 //			标签
-			JLabel headjlabel,jlabel_account,jlabel_password;
-//			文本框
-			JTextField  account , password;
+			JLabel headjlabel;
 //			按扭
-			JButton button_min,button_exit,register,enter;
+			JButton button_min,button_exit;
 //			点坐标
 			Point origin = new Point(); 
-			 public demo()
+			 public demo(JPanel act)
 			 {
 //				 组件要的图片
-				 ImageIcon headimage = new ImageIcon("D://Desktop/touxiang.jpg");
-				 ImageIcon min = new ImageIcon("D://Desktop/6.png");
-				 ImageIcon exit = new ImageIcon("D://Desktop/7.png");
-
-				 
+				 ImageIcon headimage = new ImageIcon("src/image/touxiang.jpg");
+				 ImageIcon min = new ImageIcon("src/image/min.png");
+				 ImageIcon exit = new ImageIcon("src/image/exit.png");
+			 
 //				 实例化面板组件
 				 back  = new JPanel();
 				 top = new JPanel();
 				 head = new JPanel();
 				 body = new JPanel();
-				 act = new JPanel();
 				 
 //				 实例化标签组件
 				 headjlabel  = new JLabel(headimage);
-				 jlabel_account = new JLabel("帐号");
-				 jlabel_password = new JLabel("密码");
 				 
 //				 实例化按扭组件
 				 button_min  = new JButton(min);
 				 button_exit = new JButton(exit);
-				 register = new JButton("注册");
-				 enter = new JButton("登录");
 				 
-//				 实例化文本框组件
-				 account = new JTextField(12);
-				 password = new JTextField(12);
 				 
 //				 设置面板布局
 				 top.setLayout(new FlowLayout(FlowLayout.RIGHT,1,5));
 			     head.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 1));
-			     body.setLayout(new FlowLayout(FlowLayout.CENTER,0,100));
-			     act.setLayout(new FlowLayout(FlowLayout.CENTER,10,20));
+			     body.setLayout(new FlowLayout(FlowLayout.CENTER,0,50));
 			     
 //				设置面板大小	     
 				 top.setPreferredSize(new Dimension(300, 30));
 				 head.setPreferredSize(new Dimension(300, 60));
-				 act.setPreferredSize(new Dimension(190, 300));
 				 
 //				 设置按扭大小
 				 button_min.setPreferredSize(new Dimension(min.getIconWidth(), min.getIconHeight()));
@@ -82,33 +68,11 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 				 head.setOpaque(false);
 				 body.setOpaque(false);
 				 top.setOpaque(false);
-			     act.setOpaque(false);
-			     
-//			             文本框透明化
-			     account.setOpaque(false);
-			     password.setOpaque(false);
 			     
 //				 去除边框
 			     this.setUndecorated(true);
 			     
-//			     设置字体
-			     account.setFont(new Font("宋体",Font.BOLD,18));
-			     password.setFont(new Font("宋体",Font.BOLD,18));
-			     jlabel_account.setFont(new Font("宋体",Font.BOLD,18));
-			     jlabel_password.setFont(new Font("宋体",Font.BOLD,18));
-//			     设置字体颜色
-			     jlabel_account.setForeground(Color.white);
-			     jlabel_password.setForeground(Color.white);
-			     account.setForeground(Color.white);
-			     password.setForeground(Color.white);
-			     
 //			            添加组件
-			     act.add(jlabel_account);
-			     act.add(account);
-			     act.add(jlabel_password);
-			     act.add(password);
-			     act.add(register);
-			     act.add(enter);
 			     body.add(act);
 			     top.add(button_min);
 			     top.add(button_exit);
@@ -123,8 +87,6 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 				 button_exit.addActionListener(this);
 				 back.addMouseListener(this);
 				 back.addMouseMotionListener(this);
-				 register.addActionListener(this);
-				 enter.addActionListener(this);
 				 
 //				 JFrame容器配色
 				 this.setBackground(new Color(0.1f, 0.1f, 0.1f, 0.5f));

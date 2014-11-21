@@ -9,10 +9,9 @@ import javax.swing.ImageIcon;
  */
 public class Userdata implements Serializable{
 	/**
-	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-//	private Friend[] Friend ;
+	private String id;
 	private String name;
 	private String sex;
 	private String sign;
@@ -76,11 +75,13 @@ public class Userdata implements Serializable{
 	public void setHeadicon(ImageIcon headicon) {
 		this.headicon = headicon;
 	}
+	public void setAll(String id,String name,String sex,String sign,ImageIcon headicon)
+	{
+		this.id = id;
+		this.name = name;
+		this.sex = sex;
+		this.sign = sign;
+		this.headicon = headicon;
+	}
 
-//	public Friend[] getFriend() {
-//		return Friend;
-//	}
-//	public void setFriend(Friend[] friend) {
-//		Friend = friend;
-//	}
 }
