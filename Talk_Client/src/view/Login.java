@@ -35,6 +35,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 //	按扭
 	JButton register,enter,answer;
 	demo d;
+	ObjectInputStream ois;
 	 public Login()
 	 {
 //		 实例化面板组件
@@ -98,7 +99,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		 answer.addActionListener(this);
 		 password.addKeyListener(this);
 		 
-		 d = new demo(act1);
+		 d = new demo(act1,null);
 		 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 
 	 }
@@ -149,7 +150,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					{
 						this.dispose();
 						d.dispose();
-						new FLists(Userdata);
+						new background(Userdata,connect.getS(),ois);
 						//Userdata = null;
 					}
 					else
@@ -178,7 +179,6 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 			this.dispose();
 			d.dispose();
 			connect = new ClientConnect();
-			System.out.println("OK");
 			new Question(connect.getS());
 		}
 		
@@ -192,9 +192,9 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		confirm.Users.setPassword(password);
 		ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 		oos.writeObject(confirm);
-		ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+		ois = new ObjectInputStream(s.getInputStream());
 		Userdata = new MessageType();
-		Userdata = (MessageType)ois.readObject();
+		Userdata =(MessageType)ois.readObject();
 		if(Userdata.getFlag() == 1)
 			return true;
 		else return false;	
@@ -224,8 +224,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					{
 						this.dispose();
 						d.dispose();
-						new FLists(Userdata);
-						//Userdata = null;
+						new background(Userdata,connect.getS(),ois);
 					}
 					else
 					{

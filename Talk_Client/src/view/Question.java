@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.*;
 import java.awt.event.*;
-import control.*;
 import common.*;
 import control.ClientConnect;
 import SendType.*;
@@ -15,10 +14,7 @@ public class Question extends JFrame  implements ActionListener,MouseListener ,M
 	 * 
 	 */
 	private static final long serialVersionUID = -2964486594368306911L;
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new Question(null);
-	}
+
 
 			
 //			定义组件
@@ -104,7 +100,7 @@ public class Question extends JFrame  implements ActionListener,MouseListener ,M
 				 confirm.addActionListener(this);
 				 cancel.addActionListener(this);
 				 
-				 d = new demo(act);
+				 d = new demo(act,s);
 			 }
 			
 			public void mouseDragged(MouseEvent e) {

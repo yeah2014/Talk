@@ -13,6 +13,8 @@ public class IconNodeRenderer extends DefaultTreeCellRenderer
 		String txt=((IconNode) value).getText(); //从节点读取文本 
 		setIcon(icon);//设置图片
 		setText(txt);//设置文本 
+		this.setFont(new Font("宋体",Font.BOLD,16));
+		this.setForeground(Color.WHITE);
 		return this; 
 	}
 }

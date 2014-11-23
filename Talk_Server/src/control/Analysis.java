@@ -5,6 +5,7 @@ import java.net.*;
 
 import javax.swing.ImageIcon;
 
+import view.ServerView;
 import mysql.Dao;
 import common.*;;
 
@@ -16,82 +17,99 @@ public class Analysis {
 	{
 
 	}
-
+	static int x=864;
 	public static void isAnalysis (Socket s)
 	{
 		MessageType m;
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
 		try {
-			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			ois = new ObjectInputStream(s.getInputStream());
+			oos= new ObjectOutputStream(s.getOutputStream());
 			m = (MessageType)ois.readObject();
+			
+			
 			switch(m.getFlag())
 			{
 				//验证登陆
 				case 1 : 
-				{
-					m=null;
-					m = new MessageType();
+				
+					
 					m.setFlag(1);
 					m.setId("20");
 					m.Userdata.setName("张宏业");
 					m.Userdata.setSex("男");
 					m.Userdata.setSign("我来买单!");
-					m.Userdata.setHeadicon(new ImageIcon("D://Desktop/touxiang.jpg"));
-					Myclassmates[] f = new Myclassmates[20];
-					MygoodFriends[] g = new MygoodFriends[20];
-					Myfamily[] ff = new Myfamily[20];
-					MyOwns[] o = new MyOwns[20];
-					Myteachers[] t = new Myteachers[20];
-					int k = 0,i = 0;
-					for(i=0; i<f.length ; i++)
+//					m.Userdata.setHeadicon(new ImageIcon("D://Desktop/test.png"));
+					Friends[] g = new Friends[50];
+					int i = 0;
+					for(i=0; i<10 ;i++)
 					{
-						System.out.println(i+k+1);
-						f[i] = new Myclassmates();
-						f[i].setdata(Integer.toString(i+k+1), "k+100", "你好吗", new ImageIcon("D://Desktop/xiaotouxiang.jpg"));
+						g[i] = new Friends();
+						g[i].setdata(Integer.toString(i+1), "k+100", "你好吗", new ImageIcon("D://Desktop/test.png"));
+					    if(i%2==0)
+						  g[i].setTemp(1);
+					    else
+							g[i].setTemp(0);
+					    g[i].setFlag(1);
 					}
-					k+=i+1;
-					for(i=0; i<g.length ;i++)
-					{System.out.println(i+k+1);
-						g[i] = new MygoodFriends();
-						g[i].setdata(Integer.toString(i+k+1), "k+100", "你好吗", new ImageIcon("D://Desktop/xiaotouxiang.jpg"));
-					}
-					k+=i+1;
-					for(i=0; i<ff.length ;i++)
-					{System.out.println(i+k+1);
-						ff[i] = new Myfamily();
-						ff[i].setdata(Integer.toString(i+k+1), "k+100", "你好吗", new ImageIcon("D://Desktop/xiaotouxiang.jpg"));
-					}
-					k+=i+1;
-					for(i=0; i<o.length ;i++)
-					{System.out.println(i+k+1);
-						o[i] = new MyOwns();
-						o[i].setdata(Integer.toString(i+k+1), "k+100", "你好吗", new ImageIcon("D://Desktop/xiaotouxiang.jpg"));
-					}
-					k+=i+1;
-					for(i=0; i<t.length ;i++)
+					for(; i<20 ;i++)
 					{
-						System.out.println(i+k+1);
-						t[i] = new Myteachers();
-						t[i].setdata(Integer.toString(i+k+1), "k+100", "你好吗", new ImageIcon("D://Desktop/xiaotouxiang.jpg"));
+						g[i] = new Friends();
+						g[i].setdata(Integer.toString(i+1), "k+100", "你好吗", new ImageIcon("D://Desktop/test.png"));
+						if(i%2==0)
+						   g[i].setTemp(1);
+						else
+							g[i].setTemp(0);
+					    g[i].setFlag(2);
 					}
-					m.Userdata.setMyclassmates(f);
-					m.Userdata.setMyfamily(ff);
-					m.Userdata.setMygoodFriend(g);
-					m.Userdata.setMyteachers(t);
-					m.Userdata.setMyowns(o);
-					Onlinepeople[] olp = new Onlinepeople[20];
-					for(i = 0 ; i<olp.length ; i++)
+					for(; i<30 ;i++)
 					{
-						olp[i] = new Onlinepeople();
-						olp[i].setFlag(i%5+1);
-						olp[i].setId(Integer.toString(i+1));
+						g[i] = new Friends();
+						g[i].setdata(Integer.toString(i+1), "k+100", "你好吗", new ImageIcon("D://Desktop/test.png"));
+						if(i%2==0)
+							g[i].setTemp(1);
+						else
+							g[i].setTemp(0);
+					    g[i].setFlag(3);
 					}
-					m.Addonline.setOnlinepeople(olp);
+					for(; i<40 ;i++)
+					{
+						g[i] = new Friends();
+						g[i].setdata(Integer.toString(i+1), "k+100", "你好吗", new ImageIcon("D://Desktop/test.png"));
+						if(i%2==0)
+							g[i].setTemp(1);
+						else
+							g[i].setTemp(0);
+					    g[i].setFlag(4);
+					}
+					for(; i<50 ;i++)
+					{
+						g[i] = new Friends();
+						g[i].setdata(Integer.toString(i+1), "k+100", "你好吗", new ImageIcon("D://Desktop/test.png"));
+						if(i%2==0)
+							g[i].setTemp(1);
+						else
+							g[i].setTemp(0);
+					    g[i].setFlag(5);
+					}
+					m.setId(m.Users.getId());
+					m.Userdata.setFriend(g);
+					
 					oos.writeObject(m);
-				}
-				break;
+					EachThread et = new EachThread(s);
+					ManageConnectThread.AddToMap(m.Users.getId(), et,oos);
+					ServerView.appendtoserver(m.Users.getId()+"成功登陆");
+					et.start();
+					break;
+				
+				//
+
 				//发送消息
 				case 2 :
+					System.out.println(m.Message.getFromwho()+"说： "+m.Message.getMessage());
+					new sendmessage(ManageConnectThread.GetFromMap(m.Message.getFromwho()).s, m);
+					break;
 				//发送图片
 				case 3 :
 				//注册

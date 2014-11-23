@@ -2,7 +2,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.net.*;
 public class MiMa extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener{
 
 	/**
@@ -11,7 +11,7 @@ public class MiMa extends JFrame  implements ActionListener,MouseListener ,Mouse
 	private static final long serialVersionUID = 879179576852195833L;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new MiMa();
+		new MiMa(null);
 	}
 
 //			定义组件
@@ -23,8 +23,10 @@ public class MiMa extends JFrame  implements ActionListener,MouseListener ,Mouse
 			JPasswordField  account , password;
 //			按扭
 			JButton register,enter;
-			 public MiMa()
+			Socket s;
+			 public MiMa(Socket s)
 			 {
+				 this.s = s;
 //				 实例化面板组件
 				 act = new JPanel();
 				 
@@ -81,7 +83,7 @@ public class MiMa extends JFrame  implements ActionListener,MouseListener ,Mouse
 				 register.addActionListener(this);
 				 enter.addActionListener(this);
 				 
-				 new demo(act);
+				 new demo(act,s);
 			 }
 			
 			public void mouseDragged(MouseEvent e) {

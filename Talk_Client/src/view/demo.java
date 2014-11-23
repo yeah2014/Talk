@@ -1,8 +1,10 @@
 package view;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
-
+import java.io.IOException;
+import java.net.*;
 
 public class demo extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener{
 
@@ -10,10 +12,6 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 	 * 
 	 */
 	private static final long serialVersionUID = -4064124909812386914L;
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new demo(new JPanel());
-	}
 
 			
 //			定义组件
@@ -24,9 +22,15 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 //			按扭
 			JButton button_min,button_exit;
 //			点坐标
-			Point origin = new Point(); 
-			 public demo(JPanel act)
+			Point origin = new Point();
+			Socket s;
+		    JPopupMenu popMenu;
+		    JMenuItem addItem;
+		    JMenuItem delItem;
+		    JMenuItem editItem;
+			 public demo(JPanel act,Socket s)
 			 {
+				 this.s = s;
 //				 组件要的图片
 				 ImageIcon headimage = new ImageIcon("src/image/touxiang.jpg");
 				 ImageIcon min = new ImageIcon("src/image/min.png");
@@ -96,6 +100,16 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 				 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //			             设置可见
 				 this.setVisible(true);
+			       popMenu = new JPopupMenu();
+			       addItem = new JMenuItem("添加");
+			       addItem.addActionListener(this);
+			       delItem = new JMenuItem("删除");
+			       delItem.addActionListener(this);
+			       editItem = new JMenuItem("修改密码");
+			       editItem.addActionListener(this);
+			       popMenu.add(addItem);
+			       popMenu.add(delItem);
+			       popMenu.add(editItem);
 			 }
 			
 			public void mouseDragged(MouseEvent e) {
@@ -113,11 +127,13 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 			}
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+				
 			}
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				origin.x = e.getX();  //当鼠标按下的时候获得窗口当前的位置
 		        origin.y = e.getY();
+		        if(e.getButton()==3) System.out.println("123");
 
 			}
 			public void mouseReleased(MouseEvent e) {
@@ -135,7 +151,16 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 				if(e.getSource()==button_min) 
 					this.setExtendedState(Frame.ICONIFIED);
 				else if(e.getSource() == button_exit) 
+				{
+					try {
+						if(s !=null)
+						{s.close();System.out.println("已关闭连接");}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					System.exit(0);
+				}
 				
 			}
 			 

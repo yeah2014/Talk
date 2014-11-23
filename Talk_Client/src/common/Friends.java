@@ -4,15 +4,20 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Myclassmates implements Serializable{
-   /**
+public class Friends implements Serializable{
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8547096406368199201L;
+	private static final long serialVersionUID = 1L;
+	
 	private String id;
 	private String name;
 	private String friendsign;
 	private ImageIcon headicon;
+	private int flag;
+	private int flag1;
+	private int temp;
 	public String getId() {
 		return id;
 	}
@@ -43,5 +48,22 @@ public class Myclassmates implements Serializable{
 		this.friendsign = friendsign;
 		this.headicon = headicon;
 	}
-   
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+	public int getTemp() {
+		return temp;
+	}
+	public void setTemp(int temp) {
+		this.temp = temp;
+	}
+	public int getFlag1() {
+		return flag1;
+	}
+	public void setFlag1(int flag1) {
+		this.flag1 = flag1;
+	}
 }

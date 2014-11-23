@@ -175,7 +175,7 @@ public class register extends JFrame  implements ActionListener,MouseListener ,M
 				 userName.addMouseListener(this);
 				 
 
-				 d = new demo(act);
+				 d = new demo(act,s);
 
 			 }
 			

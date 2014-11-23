@@ -11,46 +11,13 @@ public class Userdata implements Serializable{
 	/**
 	 */
 	private static final long serialVersionUID = 1L;
-	private String id;
+	private String id;//acount
 	private String name;
 	private String sex;
 	private String sign;
 	private ImageIcon headicon;
-	private MygoodFriends[] MygoodFriend;
-	private Myclassmates[] Myclassmates;
-	private Myteachers[] Myteachers;
-	private MyOwns[] Myowns;
-	private Myfamily[] Myfamily;
-	public MygoodFriends[] getMygoodFriend() {
-		return MygoodFriend;
-	}
-	public void setMygoodFriend(MygoodFriends[] mygoodFriend) {
-		MygoodFriend = mygoodFriend;
-	}
-	public Myclassmates[] getMyclassmates() {
-		return Myclassmates;
-	}
-	public void setMyclassmates(Myclassmates[] myclassmates) {
-	     Myclassmates = myclassmates;
-	}
-	public Myteachers[] getMyteachers() {
-		return Myteachers;
-	}
-	public void setMyteachers(Myteachers[] myteachers) {
-		Myteachers = myteachers;
-	}
-	public MyOwns[] getMyowns() {
-		return Myowns;
-	}
-	public void setMyowns(MyOwns[] myowns) {
-		Myowns = myowns;
-	}
-	public Myfamily[] getMyfamily() {
-		return Myfamily;
-	}
-	public void setMyfamily(Myfamily[] myfamily) {
-		Myfamily = myfamily;
-	}
+	private Friends[] friend;
+	
 	public String getName() {
 		return name;
 	}
@@ -82,6 +49,12 @@ public class Userdata implements Serializable{
 		this.sex = sex;
 		this.sign = sign;
 		this.headicon = headicon;
+	}
+	public Friends[] getFriend() {
+		return friend;
+	}
+	public void setFriend(Friends[] friend) {
+		this.friend = friend;
 	}
 
 }
