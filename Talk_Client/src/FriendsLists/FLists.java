@@ -1,67 +1,20 @@
 package FriendsLists;
 import java.awt.BorderLayout;  
-import java.util.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.Point;
-
-import javax.swing.*;
-
 import java.awt.*;
 
 import common.*;
 
 import java.awt.event.*;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter; 
-import java.awt.event.MouseEvent; 
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon; 
-import javax.swing.JButton;
-import javax.swing.JFrame; 
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTree; 
-import javax.swing.SwingUtilities; 
-import javax.swing.UIManager;  
-import javax.swing.text.html.HTMLDocument.Iterator;
+import javax.swing.*; 
 import javax.swing.tree.DefaultTreeCellRenderer; 
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;  
 
-//import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-//import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
-//import org.jvnet.substance.skin.SubstanceGreenMagicLookAndFeel;
-
-
-
-
-
-
-
-
-
-
-
-
-import control.Analysis;
 import control.ManageThread;
 import view.WinChat;
-import view.demo;
 public class FLists extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener
 {
 	/**
@@ -85,10 +38,9 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
     JMenuItem editItem;
     IconNode node;
     IconNode root1,root2,root3,root4,root5;
-   public FLists( MessageType U,Socket s)
+   public FLists( MessageType U)
    {
 	   this.U=U;
-	   this.s = s;
 //		 组件要的图片
 		 ImageIcon headimage = new ImageIcon("src/image/touxiang.jpg");
 		 ImageIcon min = new ImageIcon("src/image/min.png");
@@ -179,82 +131,84 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 	   root4=new IconNode(new ImageIcon("src/image/qq1.png"),"我的老师");
 	   root5=new IconNode(new ImageIcon("src/image/qq1.png"),"特别的");
 	   //把我的好友放进哈希表里去
-	   HashMap map1=new HashMap<String,Friends>();
-	   HashMap map2=new HashMap<String,Friends>();
-
-	   for(int i=0;i<U.Userdata.getFriend().length;i++)
+	   HashMap<String, Friends> map1=new HashMap<String,Friends>();
+	   HashMap<String, Friends> map2=new HashMap<String,Friends>();
+	   if(U.Userdata.getFriend()!=null)
 	   {
-		   if(U.Userdata.getFriend()[i].getTemp()==1)
-		      map1.put(U.Userdata.getFriend()[i].getId(), U.Userdata.getFriend()[i]);
+		   for(int i=0;i<U.Userdata.getFriend().size();i++)
+	   {
+		   if(U.Userdata.getFriend().get(i).getTemp()==1)
+		      map1.put(U.Userdata.getFriend().get(i).getId(), U.Userdata.getFriend().get(i));
 		   else
-			   map2.put(U.Userdata.getFriend()[i].getId(), U.Userdata.getFriend()[i]);
+			   map2.put(U.Userdata.getFriend().get(i).getId(), U.Userdata.getFriend().get(i));
 	   }
 	   
-       for(int i = 0;i<U.Userdata.getFriend().length;i++)
+       for(int i = 0;i<U.Userdata.getFriend().size();i++)
        {
   	   //当flag是1的时候就放在"我的好友"列表里；当flag是2的时候就放在我的同学列表里面；当flag是3的时候就放在我的家人里面；
   	   //当flag是4的时候就放在我的老师列表里面；当flag是5的时候就放在特别的列表里面
   	   //同时，为了方便，这里我们直接用文字标识是在线还是离线，在线的在后面加上在线，离线的在后面加上离线
-    	   if(U.Userdata.getFriend()[i].getTemp()==1){
-  	   switch(U.Userdata.getFriend()[i].getFlag())
+    	   if(U.Userdata.getFriend().get(i).getTemp()==1){
+  	   switch(U.Userdata.getFriend().get(i).getFlag())
   	   {
   	   case 1:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  		      {root1.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  		      {root1.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 2:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  	          {root2.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  	          {root2.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 3:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  	          {root3.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  	          {root3.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 4:
-  		     if(U.Userdata.getFriend()[i]!=null)
-  	          {root4.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		     if(U.Userdata.getFriend().get(i)!=null)
+  	          {root4.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		     break;
   	   case 5:
-  		    if(U.Userdata.getFriend()[i]!=null)
-  	          {root5.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		    if(U.Userdata.getFriend().get(i)!=null)
+  	          {root5.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		     break;
   		     default:
   		    	    break;
   	   }
      }}
-     for(int i = 0;i<U.Userdata.getFriend().length;i++)
+     for(int i = 0;i<U.Userdata.getFriend().size();i++)
      {
-    	 if(U.Userdata.getFriend()[i].getTemp()==0){
+    	 if(U.Userdata.getFriend().get(i).getTemp()==0){
   	   //当flag是1的时候就放在"我的好友"列表里；当flag是2的时候就放在我的同学列表里面；当flag是3的时候就放在我的家人里面；
   	   //当flag是4的时候就放在我的老师列表里面；当flag是5的时候就放在特别的列表里面
   	   //同时，为了方便，这里我们直接用文字标识是在线还是离线，在线的在后面加上在线，离线的在后面加上离线
-  	   switch(U.Userdata.getFriend()[i].getFlag())
+  	   switch(U.Userdata.getFriend().get(i).getFlag())
   	   {
   	   case 1:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  		      {root1.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  		      {root1.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 2:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  	          {root2.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  	          {root2.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 3:
-  		      if(U.Userdata.getFriend()[i]!=null)
-  	          {root3.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		      if(U.Userdata.getFriend().get(i)!=null)
+  	          {root3.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		      break;
   	   case 4:
-  		     if(U.Userdata.getFriend()[i]!=null)
-  	          {root4.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		     if(U.Userdata.getFriend().get(i)!=null)
+  	          {root4.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		     break;
   	   case 5:
-  		    if(U.Userdata.getFriend()[i]!=null)
-  	          {root5.add(new IconNode(U.Userdata.getFriend()[i].getHeadicon(),U.Userdata.getFriend()[i].getId()));U.Userdata.getFriend()[i].setFlag1(1);}
+  		    if(U.Userdata.getFriend().get(i)!=null)
+  	          {root5.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));U.Userdata.getFriend().get(i).setFlag1(1);}
   		     break;
   		     default:
   		    	    break;
   	   }
      }
      }
+	   }
 //     U.setPpppp(1);
 //	 }
 //	 //当U.getppppp()==1的时候，表示不是刚刚才登陆的，这时只需传上线的朋友过来
@@ -365,7 +319,7 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
    
    public static void main(String args[])
    {
-	   new FLists(null,null);
+	   new FLists(null);
    }
 public void mouseDragged(MouseEvent e) {
 	// TODO 自动生成的方法存根
@@ -387,16 +341,15 @@ public void mouseClicked(MouseEvent arg0) {
 		   TreePath path = tree.getPathForLocation(arg0.getX(), arg0.getY());
 		   IconNode node = (IconNode) path.getLastPathComponent();
 		   System.out.println(node.getText());
-		   ObjectOutputStream oos = null;
-		   System.out.println("1"+U.Users.getId()+" "+node.getText()+"/n");
-		   WinChat wc =new WinChat(s,U.Users.getId(),node.getText());
-		   ManageThread.AddToMap(node.getText(), wc);
+		   System.out.println("1"+U.Userdata.getId()+" "+node.getText()+"/n");
+		   String ss = U.Userdata.getId()+"->"+node.getText();
+		   WinChat wc =new WinChat(U.Userdata.getId(),node.getText());
+		   ManageThread.AddChatToMap(ss, wc);
 	}
 	else 
 	{
 		TreePath path = tree.getPathForLocation(arg0.getX(), arg0.getY());
 		   node = (IconNode) path.getLastPathComponent();
-		   if(path == null) return;
 		   System.out.println(node.getText());
 	}
 }

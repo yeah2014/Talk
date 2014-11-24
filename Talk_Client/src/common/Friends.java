@@ -1,20 +1,17 @@
 package common;
 
 import java.io.Serializable;
-
-import javax.swing.ImageIcon;
-
 public class Friends implements Serializable{
 
+	private static final long serialVersionUID = -5021257172304945624L;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	
 	private String id;
 	private String name;
 	private String friendsign;
-	private ImageIcon headicon;
+	private int headicon;
 	private int flag;
 	private int flag1;
 	private int temp;
@@ -36,13 +33,13 @@ public class Friends implements Serializable{
 	public void setFriendsign(String friendsign) {
 		this.friendsign = friendsign;
 	}
-	public ImageIcon getHeadicon() {
+	public int getHeadicon() {
 		return headicon;
 	}
-	public void setHeadicon(ImageIcon headicon) {
+	public void setHeadicon(int headicon) {
 		this.headicon = headicon;
 	}
-	public void setdata(String id , String name , String friendsign ,ImageIcon headicon) {
+	public void setdata(String id , String name , String friendsign ,int headicon) {
 		this.id = id;
 		this.name = name ;
 		this.friendsign = friendsign;

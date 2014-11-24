@@ -1,6 +1,7 @@
 package common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -16,7 +17,7 @@ public class Userdata implements Serializable{
 	private String sex;
 	private String sign;
 	private int headicon;
-	private Friends[] friend;
+	private ArrayList<Friends> friend;
 	
 	public String getName() {
 		return name;
@@ -50,11 +51,11 @@ public class Userdata implements Serializable{
 		this.sign = sign;
 		this.headicon = headicon;
 	}
-	public Friends[] getFriend() {
+	public ArrayList<Friends> getFriend() {
 		return friend;
 	}
-	public void setFriend(Friends[] friend) {
-		this.friend = friend;
+	public void setFriend(ArrayList<Friends> friends) {
+		this.friend = friends;
 	}
 	public String getId() {
 		return id;

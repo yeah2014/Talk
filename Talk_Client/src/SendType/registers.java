@@ -17,10 +17,10 @@ public class registers {
 			
 
 		ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-		ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 		m.Users = u;
 		m.setFlag(4);
 		oos.writeObject(m);
+		ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 		m = (MessageType)ois.readObject();
 		if(m.getFlag()==1) bl=true;
 		else bl = false;

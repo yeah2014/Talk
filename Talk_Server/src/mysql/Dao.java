@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -126,29 +127,62 @@ public class Dao {
 			}
 			
 			// 查询用户表中是否已经存在了此账号  测试成功
-						public static boolean personInformation(String account) throws SQLException {
+						public static MessageType personInformation(String account) throws SQLException {
 							MessageType message = new MessageType();
-							account = "'" +  account + "'";
-							 String sql = "select *from user_info where u_name=" + account;
+							String account1 = "'" +  account + "'";
+							 String sql = "select *from user_info where u_name=" + account1;
 							Statement statement = dao1().createStatement(); // 创建一个 Statement
 							ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
 							while (b.next()) // b.next()表示指针不断往下一个，只要不为空即可
 							{
-								message.Userdata .setId(b.getString(b.getString(2)));
-								message.Userdata.setName(b.getString(b.getString(8)));
-								message.Userdata.setSex(b.getString(b.getString(6)));
-								message.Userdata.setSign(b.getString(b.getString(7)));
-								message.Userdata.setHeadicon(1);
+								message.Userdata .setId(b.getString(2));
+								message.Userdata.setName(b.getString(8));
+								message.Userdata.setSex(b.getString(6));
+								message.Userdata.setSign(b.getString(7));
+								message.Userdata.setHeadicon(b.getInt(9));
+								System.out.println(b.getInt(9));
+//								System.out.print(b.getString(2)+" "+b.getString(8)+" "+b.getString(6)+" "+b.getString(7));
+							}
+							String sql2 = "select *from "+ account +"friendslist";
+							Statement statement2 = dao1().createStatement(); // 创建一个 Statement
+							ResultSet b2 = statement2.executeQuery(sql2);
+							String sql3;
+							Statement  statement3;// 创建一个 Statement
+							ResultSet b3;// 执行查询的sql语句，并且返回一个ResultSet查询结果集
+							ArrayList<Friends> friends=new ArrayList<Friends>();
+							while(b2.next())
+							{
+								 sql3= "select *from user_info where u_name="+b2.getString(1);
+								statement3 = dao1().createStatement();
+								b3 = statement3.executeQuery(sql3); 
+								while (b3.next()) // b.next()表示指针不断往下一个，只要不为空即可
+								{
+									Friends f = new Friends();
+									f.setFlag(b2.getInt(2));
+									f.setId(b3.getString(2));
+									f.setName(b3.getString(8));
+//									f.setSex(b3.getString(6));
+									f.setFriendsign(b3.getString(7));
+									f.setHeadicon(b3.getInt(9));
+									friends.add(f);
+									//System.out.println(b3.getString(2)+" "+b3.getString(8)+" "+b3.getString(6)+" "+b3.getString(7));
+//									System.out.println("分组是："+f.getFlag()+"帐号是："+f.getId());
+								}
+								message.Userdata.setFriend(friends);
+								for(int k=0;k<friends.size();k++)
+								{
+//									System.out.println(message.Userdata.getFriend().get(k).getId());
+								}
 							}
 							b.close(); // 关闭ResultSet 对象
 							statement.close(); // 关闭Statement 对象
-							return false;
+							return message;
 						}
 						
 						// 创建好友列表 测试成功
 						public static boolean createFriendsList(String u_name) {
 							String sql = "create table " + u_name + "friendslist("
-									+ "f_id int )";
+									+ "f_id varchar(20) , f_group int )";
 							try {
 
 								Statement stmt = dao1().createStatement();
@@ -247,16 +281,19 @@ public class Dao {
 						
 			public static void main(String args[]) throws SQLException{
 				
-				Forget a = new Forget();
-				a.setAnswer("answer");
+//				Forget a = new Forget();
+//				a.setAnswer("answer");
 				try {
-					Dao.chazhao("1111", "1");
-					//Dao.addfriends("kjfkejkfek", "456123");
-					Dao.dropfriends("kjfkejkfek", "456123");
+//					Dao.chazhao("1111", "1");
+//					Dao.addfriends("kjfkejkfek", "456123");
+//					Dao.dropfriends("kjfkejkfek", "456123");
+					Dao.personInformation("1");
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 //				System.out.println(findAnser( a, "fef"));
 //				if( login("fef", "few") )
 //					System.out.println("0");
@@ -266,9 +303,9 @@ public class Dao {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-//				Dao.createFriendsList("kjfkejkfek");
+//				Dao.createFriendsList("123");
 //			if(Dao.addUserInfo("1111", "1", "u_answer", "u_question", "u_sign"," x","y"))
-					System.out.println("fjoe");
+//					System.out.println("fjoe");
 //				//Dao.login("u_name", "u_password");
 //				//Dao.queryU_table("1", "1");
 //				createFriendsList(1);

@@ -36,6 +36,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 	JButton register,enter,answer;
 	demo d;
 	ObjectInputStream ois;
+	ObjectOutputStream oos;
 	 public Login()
 	 {
 //		 实例化面板组件
@@ -150,8 +151,9 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					{
 						this.dispose();
 						d.dispose();
-						new background(Userdata,connect.getS(),ois);
 						//Userdata = null;
+						FLists f = new FLists(Userdata);
+						ManageThread.AddFlisttomap(account, f);
 					}
 					else
 					{
@@ -184,21 +186,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		
 	}
 	 
-	public boolean isconfirm(Socket s ,String account , String password) throws Exception
-	{
-		MessageType confirm = new MessageType();
-		confirm.setFlag(1);
-		confirm.Users.setId(account);
-		confirm.Users.setPassword(password);
-		ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-		oos.writeObject(confirm);
-		ois = new ObjectInputStream(s.getInputStream());
-		Userdata = new MessageType();
-		Userdata =(MessageType)ois.readObject();
-		if(Userdata.getFlag() == 1)
-			return true;
-		else return false;	
-	}
+	
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
@@ -224,7 +212,8 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					{
 						this.dispose();
 						d.dispose();
-						new background(Userdata,connect.getS(),ois);
+						FLists f = new FLists(Userdata);
+						ManageThread.AddFlisttomap(account, f);
 					}
 					else
 					{
@@ -237,5 +226,26 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 			}
 		}
 	}
-	 
+	public boolean isconfirm(Socket s ,String account , String password) throws Exception
+	{
+		MessageType confirm = new MessageType();
+		confirm.setFlag(1);
+		confirm.Users.setId(account);
+		confirm.Users.setPassword(password);
+		oos = new ObjectOutputStream(s.getOutputStream());
+		oos.writeObject(confirm);
+		ois = new ObjectInputStream(s.getInputStream());
+		Userdata = new MessageType();
+		Userdata =(MessageType)ois.readObject();
+		if(Userdata.getFlag() == 1)
+		{
+			
+			FlistThread ft = new FlistThread(s);
+			ft.start();
+			ManageThread.AddThreadtoMap(account, ft);
+			return true;
+		}
+		
+		else return false;	
+	}
 }

@@ -1,27 +1,22 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-
-import org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
-import org.jvnet.substance.skin.SubstanceGreenMagicLookAndFeel;
-
-import SendType.messages;
-
+import common.MessageType;
+import control.ManageThread;
+import java.io.ObjectOutputStream;
 import java.net.*;
 public class WinChat extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6057688970283356344L;
 	//一个大面板，一个可编缉的文本框，一个不可编缉的文本框，一个滚动条，三个控扭
 	JPanel back,big,min,li;
-	JTextArea edit ,noedit;
+	public JTextArea edit ,noedit;
 	JScrollPane jsp,nojsp;
 	JButton close,send,record;
 	Socket s;
@@ -29,14 +24,14 @@ public class WinChat extends JFrame implements ActionListener{
 	String towho;
 	String message;
 	public static void main(String []agr){
-		new WinChat(null,null,null);
+		new WinChat(null,null);
 	}
 	
-	public WinChat(Socket s,String fromwho,String towho)
+	public WinChat(String fromwho,String towho)
 	{
+		this.setTitle(fromwho+"和"+towho+"聊天");
 		this.fromwho = fromwho;
 		this.towho = towho;
-		this.s = s;
 		li = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		min = new JPanel();
 		big = new JPanel();
@@ -95,7 +90,6 @@ public class WinChat extends JFrame implements ActionListener{
 		this.noedit.append("/n");
 	}
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == close)
 		{
 			this.dispose();
@@ -103,11 +97,18 @@ public class WinChat extends JFrame implements ActionListener{
 		else if (e.getSource() == send)
 		{
 			message = this.edit.getText();
+			this.noedit.append(fromwho+": "+message+"\n");
 			try {
-				System.out.println("3.."+fromwho+" "+towho);
-				messages.sendmessages(this.s, fromwho, towho, message);
+				MessageType m = new MessageType();
+				m.setFlag(2);
+				m.setId(fromwho);
+				m.Message.setFromwho(fromwho);
+				m.Message.setTowho(towho);
+				m.Message.setMessage(message);
+				System.out.println(fromwho+"对"+towho+"说"+message+"\n");
+				ObjectOutputStream oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(fromwho).s.getOutputStream()); 
+				oos.writeObject(m);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
