@@ -13,7 +13,7 @@ public class ClientConnect {
 	{
 		
 		try {
-			s = new Socket("127.0.0.1", 8888);
+			s = new Socket("192.168.0.101", 8888);
 			if (s == null) 	
 				{
 					flag = false ;
