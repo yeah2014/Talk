@@ -65,9 +65,9 @@ public class Dao {
 						String u_sign=u.getSign();
 						String u_sex=u.getSex();
 						String u_nicname=u.getName();
-						
+						int u_headicon=u.getHeadicon();
 					    
-						String sql = "insert into user_info(u_name,u_pass,u_ques,u_anser,u_sign,u_sex, u_nicname) values(?,?,?,?,?,?,?)"; // 定义一个插入数据库的SQL语句，其中的？代表可以改变的变量
+						String sql = "insert into user_info(u_name,u_pass,u_ques,u_anser,u_sign,u_sex, u_nicname, u_headicon) values(?,?,?,?,?,?,?,?)"; // 定义一个插入数据库的SQL语句，其中的？代表可以改变的变量
 						PreparedStatement a;
 						a = dao1().prepareStatement(sql);
 						// 用coon来创建一个PreparedStatement对象
@@ -78,6 +78,7 @@ public class Dao {
 						a.setString(5, u_sign); // 将u_sign变量的值传给？
 						a.setString(6, u_sex); // 将u-sex变量的值传给？
 						a.setString(7, u_nicname); // 将u-sex变量的值传给？
+						a.setInt(8, u_headicon);
 						if (a.executeUpdate() != 0) // 执行插入数据库的SQl语句
 							
 						{   
@@ -126,7 +127,36 @@ public class Dao {
 				return password;
 			}
 			
+			public static boolean isperson(String account)throws SQLException
+			{
+				String account1 = "'" +  account + "'";
+				 String sql = "select *from user_info where u_name=" + account1;
+				Statement statement = dao1().createStatement(); // 创建一个 Statement
+				ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
+				if(b.next()==false) return false;
+				else return true;
+			}
 			// 查询用户表中是否已经存在了此账号  测试成功
+			
+			public static MessageType personal(String account)throws SQLException
+			{
+				MessageType message = new MessageType();
+				String account1 = "'" +  account + "'";
+				 String sql = "select *from user_info where u_name=" + account1;
+				Statement statement = dao1().createStatement(); // 创建一个 Statement
+				ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
+				while(b.next())
+				{
+					message.Users.setId(b.getString(2));
+					message.Users.setSex(b.getString(6));
+					message.Users.setName(b.getString(8));
+					message.Users.setSign(b.getString(7));
+					message.Users.setHeadicon(b.getInt(9));
+				}
+				b.close();
+				statement.close();
+				return message;
+			}
 						public static MessageType personInformation(String account) throws SQLException {
 							MessageType message = new MessageType();
 							String account1 = "'" +  account + "'";
@@ -240,22 +270,24 @@ public class Dao {
 						
 						
 						// 添加好友 测试成功
-						public static boolean addfriends( String fromwho,String f_name)
+						public static boolean addfriends( String fromwho,String f_name,int group)
 								throws SQLException {
 							// fromwho = "'" + fromwho + "'";
+							if(!Dao.isperson(f_name))
+								return false;
 							String sql = "insert into " + fromwho
-									+ "friendslist (f_id) values(?)"; // 定义一个插入数据库的SQL语句，其中的？代表可以改变的变量
+									+ "friendslist (f_id,f_group) values(?,?)"; // 定义一个插入数据库的SQL语句，其中的？代表可以改变的变量
 							PreparedStatement a;
 							a = dao1().prepareStatement(sql);
 							// 用coon来创建一个PreparedStatement对象
 							a.setString(1, f_name); // 将u_name变量的值传给？
-
+							a.setInt(2, group);
 							if (a.executeUpdate() != 0) // 执行插入数据库的SQl语句
 							{
 								System.out.println("插入成功");
 								return true;
 							}
-							a.close(); // 关闭a 对象
+							a.close();// 关闭a 对象
 							return false;
 
 						}
@@ -285,9 +317,10 @@ public class Dao {
 //				a.setAnswer("answer");
 				try {
 //					Dao.chazhao("1111", "1");
-//					Dao.addfriends("kjfkejkfek", "456123");
+					Dao.addfriends("123", "12",1);
 //					Dao.dropfriends("kjfkejkfek", "456123");
-					Dao.personInformation("1");
+//					Dao.personInformation("1");
+//					System.out.println(Dao.isperson("1"));
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

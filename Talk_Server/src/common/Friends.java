@@ -18,7 +18,6 @@ public class Friends implements Serializable{
 	private String friendsign;
 	private int headicon;
 	private int flag;
-	private int flag1;
 	private int temp;
 	public String getId() {
 		return id;
@@ -62,10 +61,5 @@ public class Friends implements Serializable{
 	public void setTemp(int temp) {
 		this.temp = temp;
 	}
-	public int getFlag1() {
-		return flag1;
-	}
-	public void setFlag1(int flag1) {
-		this.flag1 = flag1;
-	}
+
 }

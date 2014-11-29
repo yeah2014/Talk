@@ -19,6 +19,7 @@ public class registers {
 		ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 		m.Users = u;
 		m.setFlag(4);
+		m.Users.setHeadicon(1);
 		oos.writeObject(m);
 		ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 		m = (MessageType)ois.readObject();

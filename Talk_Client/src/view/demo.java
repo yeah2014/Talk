@@ -12,7 +12,10 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 	 * 
 	 */
 	private static final long serialVersionUID = -4064124909812386914L;
-
+	public static void main(String a[])
+	{
+		new demo(null,null);
+	}
 			
 //			定义组件
 //			面板
@@ -24,17 +27,14 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 //			点坐标
 			Point origin = new Point();
 			Socket s;
-		    JPopupMenu popMenu;
-		    JMenuItem addItem;
-		    JMenuItem delItem;
-		    JMenuItem editItem;
+
 			 public demo(JPanel act,Socket s)
 			 {
 				 this.s = s;
 //				 组件要的图片
-				 ImageIcon headimage = new ImageIcon("D://Desktop/course/touxiang.jpg");
-				 ImageIcon min = new ImageIcon("D://Desktop/course/min.png");
-				 ImageIcon exit = new ImageIcon("D://Desktop/course/exit.png");
+				 ImageIcon headimage = new ImageIcon("D://Desktop/course/img/touxiang.jpg");
+				 ImageIcon min = new ImageIcon("D://Desktop/course/img/min.png");
+				 ImageIcon exit = new ImageIcon("D://Desktop/course/img/exit.png");
 			 
 //				 实例化面板组件
 				 back  = new JPanel();
@@ -77,6 +77,7 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 			     this.setUndecorated(true);
 			     
 //			            添加组件
+			     if(act!=null)
 			     body.add(act);
 			     top.add(button_min);
 			     top.add(button_exit);
@@ -100,16 +101,7 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 				 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //			             设置可见
 				 this.setVisible(true);
-			       popMenu = new JPopupMenu();
-			       addItem = new JMenuItem("添加");
-			       addItem.addActionListener(this);
-			       delItem = new JMenuItem("删除");
-			       delItem.addActionListener(this);
-			       editItem = new JMenuItem("修改密码");
-			       editItem.addActionListener(this);
-			       popMenu.add(addItem);
-			       popMenu.add(delItem);
-			       popMenu.add(editItem);
+				 setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			 }
 			
 			public void mouseDragged(MouseEvent e) {

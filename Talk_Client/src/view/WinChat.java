@@ -2,13 +2,17 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
+
 import common.MessageType;
 import control.ManageThread;
+
 import java.io.ObjectOutputStream;
 import java.net.*;
-public class WinChat extends JFrame implements ActionListener{
+public class WinChat extends JFrame implements ActionListener,WindowListener{
 
 	/**
 	 * 
@@ -45,7 +49,7 @@ public class WinChat extends JFrame implements ActionListener{
 		li.add(record,FlowLayout.LEFT);
 		li.add(close);
 		li.add(send);
-//		noedit.setEditable(false);
+		noedit.setEditable(false);
 		noedit.setLineWrap(true);
 		edit.setEditable(true);
 		edit.setLineWrap(true);
@@ -82,6 +86,8 @@ public class WinChat extends JFrame implements ActionListener{
 		this.setSize(700, 600);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.addWindowListener(this);
 	}
 
 	public void addtext(String s )
@@ -92,6 +98,7 @@ public class WinChat extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == close)
 		{
+			ManageThread.removechat(fromwho+"->"+towho);
 			this.dispose();
 		}
 		else if (e.getSource() == send)
@@ -116,6 +123,28 @@ public class WinChat extends JFrame implements ActionListener{
 		{
 			
 		}
+	}
+
+	public void windowOpened(WindowEvent e) {
+	}
+
+	public void windowClosing(WindowEvent e) {
+		ManageThread.removechat(fromwho+"->"+towho);
+	}
+
+	public void windowClosed(WindowEvent e) {
+	}
+
+	public void windowIconified(WindowEvent e) {
+	}
+
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+	public void windowActivated(WindowEvent e) {
+	}
+
+	public void windowDeactivated(WindowEvent e) {
 	}
 	
 }

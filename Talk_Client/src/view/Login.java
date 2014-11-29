@@ -151,7 +151,6 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					{
 						this.dispose();
 						d.dispose();
-						//Userdata = null;
 						FLists f = new FLists(Userdata);
 						ManageThread.AddFlisttomap(account, f);
 					}

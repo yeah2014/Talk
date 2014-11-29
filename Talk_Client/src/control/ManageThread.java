@@ -1,6 +1,8 @@
 package control;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import FriendsLists.FLists;
 import view.*;
 public class ManageThread {
@@ -30,5 +32,10 @@ public class ManageThread {
 	public static FlistThread Getthreadfrommap(String s)
 	{
 		return (FlistThread) hashs.get(s);
+	}
+	public static void removechat(String s)
+	{
+		hash.remove(s);
+		
 	}
 }
