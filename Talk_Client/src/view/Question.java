@@ -132,7 +132,7 @@ public class Question extends JFrame  implements ActionListener,MouseListener ,M
 				{
 					this.dispose();
 					d.dispose();
-					new Login();
+					new Login(s);
 				}
 				else if(e.getSource() == confirm)
 				{
@@ -140,14 +140,16 @@ public class Question extends JFrame  implements ActionListener,MouseListener ,M
 					Found f = new Found(s, fg);
 					if(f.bl == false) 
 					{
-						JOptionPane.showMessageDialog(null, "资料填写错误"); 
-						connect = new ClientConnect();
+						JOptionPane.showMessageDialog(null, "资料填写错误");
+						s=null;
+						connect = new ClientConnect(s);
 						this.s = connect.getS();
 					}
 					else{
 					this.dispose();
 					d.dispose();
-					new Login();
+					s=null;
+					new Login(s);
 					}
 				}
 			}

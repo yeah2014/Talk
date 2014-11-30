@@ -61,10 +61,14 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
     IconNode root1,root2,root3,root4,root5;
     HashMap<IconNode, Integer > hash = new HashMap<IconNode, Integer >();
     HashMap<String, IconNode > hash1 = new HashMap<String, IconNode >();
-	HashMap<String, Friends> map1=new HashMap<String,Friends>();
+    HashMap<String, IconNode> hashonline = new HashMap<String, IconNode>();
+    HashMap<String, IconNode> hashleaveline = new HashMap<String, IconNode>();
+ 	HashMap<String, Friends> map1=new HashMap<String,Friends>();
 	HashMap<String, Friends> map2=new HashMap<String,Friends>();
 	public Vector<MessageType> vt = new Vector<MessageType>();
     int group;
+    int[] numberingroup ={0,0,0,0,0,0};
+    String myname;
    public FLists( MessageType U)
    {
 	   this.U=U;
@@ -162,11 +166,11 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 	   JPanel jj = new JPanel();
 	   jj.setOpaque(false);
 	   jj.setLayout(new BorderLayout());
-	   root1=new IconNode(new ImageIcon("src/image/qq1.png"),"我的好友"); 
-	   root2=new IconNode(new ImageIcon("src/image/qq1.png"),"我的同学"); 
-	   root3=new IconNode(new ImageIcon("src/image/qq1.png"),"我的家人");
-	   root4=new IconNode(new ImageIcon("src/image/qq1.png"),"我的老师");
-	   root5=new IconNode(new ImageIcon("src/image/qq1.png"),"特别的");
+	   root1=new IconNode(new ImageIcon("src/image/qq1.png"),"我的好友",true); 
+	   root2=new IconNode(new ImageIcon("src/image/qq1.png"),"我的同学",true); 
+	   root3=new IconNode(new ImageIcon("src/image/qq1.png"),"我的家人",true);
+	   root4=new IconNode(new ImageIcon("src/image/qq1.png"),"我的老师",true);
+	   root5=new IconNode(new ImageIcon("src/image/qq1.png"),"特别的",true);
 	   hash.put(root1, 1); hash1.put("1", root1);
 	   hash.put(root2, 2); hash1.put("2", root2);
 	   hash.put(root3, 3); hash1.put("3", root3);
@@ -179,9 +183,15 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 		   for(int i=0;i<U.Userdata.getFriend().size();i++)
 	   {
 		   if(U.Userdata.getFriend().get(i).getTemp()==1)
-		      map1.put(U.Userdata.getFriend().get(i).getId(), U.Userdata.getFriend().get(i));
+		      {
+			   map1.put(U.Userdata.getFriend().get(i).getId(), U.Userdata.getFriend().get(i));
+		      hashonline.put(U.Userdata.getFriend().get(i).getId(), new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId(),true));
+		      }
 		   else
+			   {
 			   map2.put(U.Userdata.getFriend().get(i).getId(), U.Userdata.getFriend().get(i));
+			   hashleaveline.put(U.Userdata.getFriend().get(i).getId(), new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId(),false));
+			   }
 	   }
 	   
        for(int i = 0;i<U.Userdata.getFriend().size();i++)
@@ -194,23 +204,23 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
   	   {
   	   case 1:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  		      {root1.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId()));}
+  		      {root1.add(hashonline.get(U.Userdata.getFriend().get(i).getId()));numberingroup[1]++;}
   		      break;
   	   case 2:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  	          {root2.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root2.add(hashonline.get(U.Userdata.getFriend().get(i).getId()));numberingroup[2]++; }
   		      break;
   	   case 3:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  	          {root3.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root3.add(hashonline.get(U.Userdata.getFriend().get(i).getId()));numberingroup[3]++; }
   		      break;
   	   case 4:
   		     if(U.Userdata.getFriend().get(i)!=null)
-  	          {root4.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root4.add(hashonline.get(U.Userdata.getFriend().get(i).getId()));numberingroup[4]++; }
   		     break;
   	   case 5:
   		    if(U.Userdata.getFriend().get(i)!=null)
-  	          {root5.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root5.add(hashonline.get(U.Userdata.getFriend().get(i).getId()));numberingroup[5]++; }
   		     break;
   		     default:
   		    	    break;
@@ -226,23 +236,23 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
   	   {
   	   case 1:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  		      {root1.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  		      {root1.add(hashleaveline.get(U.Userdata.getFriend().get(i).getId())); }
   		      break;
   	   case 2:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  	          {root2.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root2.add(hashleaveline.get(U.Userdata.getFriend().get(i).getId())); }
   		      break;
   	   case 3:
   		      if(U.Userdata.getFriend().get(i)!=null)
-  	          {root3.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root3.add(hashleaveline.get(U.Userdata.getFriend().get(i).getId())); }
   		      break;
   	   case 4:
   		     if(U.Userdata.getFriend().get(i)!=null)
-  	          {root4.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root4.add(hashleaveline.get(U.Userdata.getFriend().get(i).getId())); }
   		     break;
   	   case 5:
   		    if(U.Userdata.getFriend().get(i)!=null)
-  	          {root5.add(new IconNode(U.Userdata.getFriend().get(i).getHeadicon(),U.Userdata.getFriend().get(i).getId())); }
+  	          {root5.add(hashleaveline.get(U.Userdata.getFriend().get(i).getId())); }
   		     break;
   		     default:
   		    	    break;
@@ -250,70 +260,8 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
      }
      }
 	   }
-//     U.setPpppp(1);
-//	 }
-//	 //当U.getppppp()==1的时候，表示不是刚刚才登陆的，这时只需传上线的朋友过来
-//	 else
-//	 {
-//		Iterator it=map2.keySet().iterator();
-//		Iterator is=map1.keySet().iterator();
-//		while(it.hasNext())
-//		{
-//			if(it.next().equals(1))
-//			{
-//				map1.put(1, map2.get(it.next()));
-//				map2.remove(it.next());
-//			}
-//		}
-//		while(is.hasNext())
-//		{
-//			if(is.next().equals(0))
-//			{
-//				map2.put(0, map1.get(is.next()));
-//				map1.remove(it.next());
-//			}
-//		}
-//	 }
 
-//	   ImageIcon image=new ImageIcon("img/qq1.png");
-//	   for(int i=0;i<U.Userdata.getMygoodFriend().length;i++)
-//	   {
-//		   root1.add(new IconNode(U.Userdata.getMygoodFriend()[i].getHeadicon(),U.Userdata.getMygoodFriend()[i].getName()));
-//	   }
-//	   for(int i=0;i<U.Userdata.getMyclassmates().length;i++)
-//	   {
-//		   root2.add(new IconNode(U.Userdata.getMyclassmates()[i].getHeadicon(),U.Userdata.getMyclassmates()[i].getName()));
-//	   }
-//	   for(int i=0;i<U.Userdata.getMyfamily().length;i++)
-//	   {
-//		   root3.add(new IconNode(U.Userdata.getMyfamily()[i].getHeadicon(),U.Userdata.getMyfamily()[i].getName()));
-//	   }
-//	   for(int i=0;i<U.Userdata.getMyteachers().length;i++)
-//	   {
-//		   root4.add(new IconNode(U.Userdata.getMyteachers()[i].getHeadicon(),U.Userdata.getMyteachers()[i].getName()));
-//	   }
-//	   for(int i=0;i<U.Userdata.getMyowns().length;i++)
-//	   {
-//		   root5.add(new IconNode(U.Userdata.getMyowns()[i].getHeadicon(),U.Userdata.getMyowns()[i].getName()));
-//	   }
-//	   for(int i=0;i<U.Addonline.getOnlinepeople().length;i++)
-//	   {
-//		   switch(U.Addonline.getOnlinepeople()[i].getFlag())
-//		   {
-//		   case 1:root1.add(new IconNode(U.Addonline.getOnlinepeople()[i].getHeadicon(),U.Addonline.getOnlinepeople()[i].getName()));
-//		          break;
-//		   case 2:root2.add(new IconNode(U.Addonline.getOnlinepeople()[i].getHeadicon(),U.Addonline.getOnlinepeople()[i].getName()));
-//		          break;
-//		   case 3:root3.add(new IconNode(U.Addonline.getOnlinepeople()[i].getHeadicon(),U.Addonline.getOnlinepeople()[i].getName()));
-//		          break;
-//		   case 4:root4.add(new IconNode(U.Addonline.getOnlinepeople()[i].getHeadicon(),U.Addonline.getOnlinepeople()[i].getName()));
-//		          break;
-//		   case 5:root5.add(new IconNode(U.Addonline.getOnlinepeople()[i].getHeadicon(),U.Addonline.getOnlinepeople()[i].getName()));
-//		          break;
-//			   default:break;
-//		   }
-//	   }
-	   IconNode Root=new IconNode(null,null);//定义根节点 
+	   IconNode Root=new IconNode(null,null,false);//定义根节点 
 	   Root.add(root1);//定义二级节点
 	   Root.add(root2);//定义二级节点   
 	   Root.add(root3);
@@ -376,12 +324,17 @@ public void mouseClicked(MouseEvent e) {
 			WinChat wc = ManageThread.GetchatFromMap(sss);
 			if(wc!=null) 
 			{
-				System.out.println(U.Message.getFromwho()+"->"+U.Message.getTowho());
-				wc.noedit.append(vt.lastElement().Message.getFromwho()+": "+vt.lastElement().Message.getMessage()+"\n");
+				wc.noedit.setFont(new Font("雅黑",Font.BOLD,10));
+				wc.noedit.append(wc.towho+"  "+vt.lastElement().Message.getSendtime()+"\n");
+				wc.noedit.setFont(new Font("雅黑",Font.BOLD,20));
+				wc.noedit.append(vt.lastElement().Message.getMessage()+"\n");
 			}
 			else{
 			WinChat wcc =new WinChat(myaccount,vt.lastElement().Message.getFromwho());
-			wcc.noedit.append(vt.lastElement().Message.getFromwho()+": "+vt.lastElement().Message.getMessage()+"\n");
+			wcc.noedit.setFont(new Font("雅黑",Font.BOLD,10));
+			wcc.noedit.append(wcc.towho+"  "+vt.lastElement().Message.getSendtime()+"\n");
+			wcc.noedit.setFont(new Font("雅黑",Font.BOLD,20));
+			wcc.noedit.append(vt.lastElement().Message.getMessage()+"\n");
 			   ManageThread.AddChatToMap(sss, wcc);
 			}
 			vt.remove(vt.size()-1);
@@ -498,9 +451,12 @@ public void addperson(MessageType U)
 	IconNode in = (IconNode)hash1.get(U.Users.getPassword());
 	Friends f = new Friends();
 	f.setdata(U.Users.getId(), U.Users.getName(), U.Users.getSign(), U.Users.getHeadicon());
-	in.add(new IconNode(f.getHeadicon(),f.getId()));
+	hashonline.put(f.getId(),new IconNode(f.getHeadicon(),f.getId(),true));
+	in.insert(hashonline.get(f.getId()), numberingroup[group]);
+	numberingroup[group]++;
 	this.map1.put(f.getId(), f);
 	tree.updateUI();
+	
 }
 
 public void remindtofl(MessageType U)
@@ -513,6 +469,33 @@ public void remindtofl(MessageType U)
 	}
 }
 
-//public void add_remind()
+public void onlinefriend(MessageType U)
+{
+	
+	Friends fs=map2.remove(U.getId());
+	int where = fs.getFlag();
+	if(fs!=null) 
+		map1.put(U.getId(), fs);
+	IconNode in = hashleaveline.remove(U.getId());
+	hashonline.put(U.getId(), in);
+	in.b=true;
+	hash1.get(String.valueOf(where)).remove(in);
+	hash1.get(String.valueOf(where)).insert(hashonline.get(U.getId()), numberingroup[where]);
+	tree.updateUI();
+}
 
+public void leavelinefriend(MessageType U)
+{
+	Friends fs=map1.remove(U.getId());
+	int where = fs.getFlag();
+	if(fs!=null) 
+		map2.put(U.getId(), fs);
+	IconNode in = hashonline.remove(U.getId());
+	hashleaveline.put(U.getId(), in);
+	in.b=false;
+	hash1.get(String.valueOf(where)).remove(in);
+	hash1.get(String.valueOf(where)).add(hashleaveline.get(U.getId()));
+	numberingroup[where]--;
+	tree.updateUI();
+}
 }

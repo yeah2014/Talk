@@ -9,7 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.sql.RowSet;
 import javax.swing.JOptionPane;
+
+import com.sun.rowset.CachedRowSetImpl;
 
 import common.*;
 
@@ -157,76 +160,82 @@ public class Dao {
 				statement.close();
 				return message;
 			}
-						public static MessageType personInformation(String account) throws SQLException {
-							MessageType message = new MessageType();
-							String account1 = "'" +  account + "'";
-							 String sql = "select *from user_info where u_name=" + account1;
-							Statement statement = dao1().createStatement(); // 创建一个 Statement
-							ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
-							while (b.next()) // b.next()表示指针不断往下一个，只要不为空即可
-							{
-								message.Userdata .setId(b.getString(2));
-								message.Userdata.setName(b.getString(8));
-								message.Userdata.setSex(b.getString(6));
-								message.Userdata.setSign(b.getString(7));
-								message.Userdata.setHeadicon(b.getInt(9));
-								System.out.println(b.getInt(9));
-//								System.out.print(b.getString(2)+" "+b.getString(8)+" "+b.getString(6)+" "+b.getString(7));
-							}
-							String sql2 = "select *from "+ account +"friendslist";
-							Statement statement2 = dao1().createStatement(); // 创建一个 Statement
-							ResultSet b2 = statement2.executeQuery(sql2);
-							String sql3;
-							Statement  statement3;// 创建一个 Statement
-							ResultSet b3;// 执行查询的sql语句，并且返回一个ResultSet查询结果集
-							ArrayList<Friends> friends=new ArrayList<Friends>();
-							while(b2.next())
-							{
-								 sql3= "select *from user_info where u_name="+b2.getString(1);
-								statement3 = dao1().createStatement();
-								b3 = statement3.executeQuery(sql3); 
-								while (b3.next()) // b.next()表示指针不断往下一个，只要不为空即可
-								{
-									Friends f = new Friends();
-									f.setFlag(b2.getInt(2));
-									f.setId(b3.getString(2));
-									f.setName(b3.getString(8));
-//									f.setSex(b3.getString(6));
-									f.setFriendsign(b3.getString(7));
-									f.setHeadicon(b3.getInt(9));
-									friends.add(f);
-									//System.out.println(b3.getString(2)+" "+b3.getString(8)+" "+b3.getString(6)+" "+b3.getString(7));
-//									System.out.println("分组是："+f.getFlag()+"帐号是："+f.getId());
-								}
-								message.Userdata.setFriend(friends);
-								for(int k=0;k<friends.size();k++)
-								{
-//									System.out.println(message.Userdata.getFriend().get(k).getId());
-								}
-							}
-							b.close(); // 关闭ResultSet 对象
-							statement.close(); // 关闭Statement 对象
-							return message;
-						}
+			public static ArrayList<String> whoesfriends(String account)throws SQLException
+			{
+				ArrayList<String> al = new ArrayList<String>();
+				String sql2 = "select *from "+ account +"friendslist";
+				Statement statement2 = dao1().createStatement(); // 创建一个 Statement
+				ResultSet b2 = statement2.executeQuery(sql2);
+				while(b2.next())
+				{
+					al.add(b2.getString(1));
+				}
+				b2.close();
+				statement2.close();
+				return al;
+			}
+			
+			public static MessageType personInformation(String account) throws SQLException {			
+				MessageType message = new MessageType();
+				String account1 = "'" +  account + "'";
+				String sql = "select *from user_info where u_name=" + account1;
+				Statement statement = dao1().createStatement(); // 创建一个 Statement
+				ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
+				while (b.next()) // b.next()表示指针不断往下一个，只要不为空即可
+				{
+					message.Userdata .setId(b.getString(2));
+					message.Userdata.setName(b.getString(8));
+					message.Userdata.setSex(b.getString(6));
+					message.Userdata.setSign(b.getString(7));
+					message.Userdata.setHeadicon(b.getInt(9));
+				}
+				String sql2 = "select *from "+ account +"friendslist";
+				Statement statement2 = dao1().createStatement(); // 创建一个 Statement
+				ResultSet b2 = statement2.executeQuery(sql2);
+				String sql3;
+				Statement statement3;// 创建一个 Statement
+				ResultSet b3;// 执行查询的sql语句，并且返回一个ResultSet查询结果集
+				ArrayList<Friends> friends=new ArrayList<Friends>();
+				while(b2.next())
+				{
+					sql3= "select *from user_info where u_name="+b2.getString(1);
+					statement3 = dao1().createStatement();
+					b3 = statement3.executeQuery(sql3); 
+					while (b3.next()) // b.next()表示指针不断往下一个，只要不为空即可
+					{
+						Friends f = new Friends();
+						f.setFlag(b2.getInt(2));
+						f.setId(b3.getString(2));
+						f.setName(b3.getString(8));
+						f.setFriendsign(b3.getString(7));
+						f.setHeadicon(b3.getInt(9));
+						friends.add(f);
+					}
+					message.Userdata.setFriend(friends);
+				}
+				b.close(); // 关闭ResultSet 对象
+				statement.close(); // 关闭Statement 对象
+				return message;
+			}
 						
-						// 创建好友列表 测试成功
-						public static boolean createFriendsList(String u_name) {
-							String sql = "create table " + u_name + "friendslist("
-									+ "f_id varchar(20) , f_group int )";
-							try {
+		// 创建好友列表 测试成功
+		public static boolean createFriendsList(String u_name) {
+			String sql = "create table " + u_name + "friendslist("
+						+ "f_id varchar(20) , f_group int )";
+			try {
 
-								Statement stmt = dao1().createStatement();
-								if (!stmt.execute(sql)) {
-									System.out.println("好友列表构建成功");
-									return true;
-								}
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
+					Statement stmt = dao1().createStatement();
+					if (!stmt.execute(sql)) {
+						System.out.println("好友列表构建成功");
+						return true;
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
-							return false;
+				return false;
 
-						}
+		}
 						
 						
 						// 定义将数据插入数据库的方法 测试成功
@@ -249,7 +258,7 @@ public class Dao {
 						}
 
 						// 定义查找记录 测试成功
-						public static ResultSet chazhao(String fromwho, String towho) throws Exception {
+						public static RowSet chazhao(String fromwho, String towho) throws Exception {
 							fromwho = "'" + fromwho + "'";
 							towho = "'" + towho + "'";
 
@@ -257,17 +266,24 @@ public class Dao {
 									+ "and t_who=" + towho + ")or(f_who=" + towho + "and t_who="
 									+ fromwho + ")"; // 定义执行查询的sql语句
 							Statement statement = dao1().createStatement(); // 创建一个 Statement
-							ResultSet b = statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
-							while (b.next()) // b.next()表示指针不断往下一个，只要不为空即可
-								{
-							System.out.println(b.getString(2) + "\t" // b.getString(1)表示一条查询结果的第1个字段的值
-									+ b.getString(3) + "\t" // b.getString(2)表示一条查询结果的第2个字段的值
-									+ b.getString(4) + "\t" // b.getString(3)表示一条查询结果的第3个字段的值
-									+ b.getString(5)); // b.getString(4)表示一条查询结果的第4个字段的值
-						}
+							ResultSet bb =  statement.executeQuery(sql); // 执行查询的sql语句，并且返回一个ResultSet查询结果集
+							RowSet b=populate(bb);
+//							while (b.next()) // b.next()表示指针不断往下一个，只要不为空即可
+//								{
+//							System.out.println(b.getString(2) + "\t" // b.getString(1)表示一条查询结果的第1个字段的值
+//									+ b.getString(3) + "\t" // b.getString(2)表示一条查询结果的第2个字段的值
+//									+ b.getString(4) + "\t" // b.getString(3)表示一条查询结果的第3个字段的值
+//									+ b.getString(5)); // b.getString(4)表示一条查询结果的第4个字段的值
+//						}
+							
 							return b;
 						}
-						
+						public static RowSet populate(ResultSet rs) throws SQLException 
+						{
+						CachedRowSetImpl crs = new CachedRowSetImpl();
+						crs.populate(rs);
+						return crs;
+						}
 						
 						// 添加好友 测试成功
 						public static boolean addfriends( String fromwho,String f_name,int group)

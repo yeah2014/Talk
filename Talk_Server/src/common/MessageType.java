@@ -13,6 +13,7 @@ public class MessageType implements Serializable{
 	 * flag = 5时，Forget 载入数据，即找回密码;
 	 * flag = 6时，Users载入数据，即修改密码;
 	 * flag = 7时,Users载入数据，添加好友,
+	 * 10 查找消息
 	 * 
 	 * temp对应多少就有多少个人在相应的列表
 	 * 服务端发送时;
@@ -22,6 +23,7 @@ public class MessageType implements Serializable{
 	 * flag = 3时，输发Image;
 	 * flag = 7 , 只发上线好友
 	 * flag = 8, 添加好友成功
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private int flag;

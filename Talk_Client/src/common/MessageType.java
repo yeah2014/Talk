@@ -20,6 +20,7 @@ public class MessageType implements Serializable{
 	 * flag = 1时，登陆成功，发送Userdata;
 	 * flag = 2时， 转发Message;
 	 * flag = 3时，输发Image;
+	 * 4 通知在线  5通知离线
 	 * flag = 7 , 添加好友
 	 * flag = 8, 添加好友成功
 	 */

@@ -212,7 +212,7 @@ public class register extends JFrame  implements ActionListener,MouseListener ,M
 				{
 					this.dispose();
 					d.dispose();
-					new Login();
+					new Login(s);
 				}
 				else 
 				{
@@ -230,11 +230,13 @@ public class register extends JFrame  implements ActionListener,MouseListener ,M
 						JOptionPane.showMessageDialog(null, "注册成功，确定返回登录"); 
 						this.dispose();
 						d.dispose();
-						new Login();
+						s=null;
+						new Login(s);
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "帐号存在"); 
-							connect = new ClientConnect();
+							s=null;
+							connect = new ClientConnect(s);
 							this.s = connect.getS();
 							
 						}

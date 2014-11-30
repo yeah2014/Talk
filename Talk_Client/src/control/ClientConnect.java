@@ -9,9 +9,14 @@ public class ClientConnect {
 	
 	private Socket s;
 	private boolean flag;
-	public ClientConnect()
+	public ClientConnect(Socket ss)
 	{
-		
+		if(ss!=null) 
+		{
+			this.s=ss;
+			this.flag = true;
+		}
+		else{
 		try {
 			s = new Socket(MyClient.ip, 8888);
 			if (s == null) 	
@@ -25,7 +30,7 @@ public class ClientConnect {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-			
+		}
 	}
 	public boolean getFlag() {
 		return flag;

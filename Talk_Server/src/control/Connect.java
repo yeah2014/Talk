@@ -1,9 +1,12 @@
 package control;
 import java.net.*;
+import java.util.ArrayList;
 
 import common.*;
 
 import java.io.*;
+
+import javax.swing.JOptionPane;
 
 import mysql.*;
 import view.*;
@@ -24,7 +27,7 @@ public class Connect extends Thread{
 		{
 			s = ss.accept();
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-				MessageType m = (MessageType) ois.readObject();
+			MessageType m = (MessageType) ois.readObject();
 			switch(m.getFlag())
 			{
 				case 1 : 
@@ -33,11 +36,36 @@ public class Connect extends Thread{
 						MessageType U = Dao.personInformation(m.Users.getId());
 						U.setFlag(1);
 						U.setId(m.Users.getId());
+						ArrayList<String> al = Dao.whoesfriends(m.Users.getId());
+						for(int i=0;i<al.size();i++)
+						{
+							EachThread eett =ManageConnectThread.GetFromMap(al.get(i));
+							if(eett!=null)
+							{
+								MessageType mt = new MessageType();
+								mt.setFlag(4);
+								mt.setId(m.Users.getId());
+								mt.Users.setId(al.get(i));
+								ObjectOutputStream oos = new ObjectOutputStream(eett.s.getOutputStream());
+								oos.writeObject(mt);
+								for(int j=0;j<U.Userdata.getFriend().size();j++)
+								{
+									if(al.get(i).equals(U.Userdata.getFriend().get(j).getId())) 
+									{
+										U.Userdata.getFriend().get(j).setTemp(1);
+										break;
+									}
+								}
+							}
+						}
 						ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 						oos.writeObject(U);
-						EachThread et = new EachThread(s);
+						EachThread et = new EachThread(s,m.Users.getId());
 						et.start();
 						ManageConnectThread.AddToMap(m.Users.getId(), et);
+						
+
+						
 					}
 					else {
 						m.setFlag(0);

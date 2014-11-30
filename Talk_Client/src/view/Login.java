@@ -35,10 +35,12 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 //	按扭
 	JButton register,enter,answer;
 	demo d;
+	Socket s;
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
-	 public Login()
+	 public Login(Socket s)
 	 {
+		 this.s=s;
 //		 实例化面板组件
 		 act = new JPanel();
 		 act1 = new JPanel();
@@ -106,7 +108,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 	 }
 	 public static void main(String []a)
 	 {
-		 new Login();
+		 new Login(null);
 	 }
 	 
 	
@@ -137,7 +139,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		// TODO Auto-generated method stub
 		if(e.getSource() == enter)
 		{
-			connect = new ClientConnect();
+			connect = new ClientConnect(s);
 			if(!connect.getFlag())  System.exit(0);
 			else 
 			{
@@ -156,7 +158,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 					}
 					else
 					{
-						
+						JOptionPane.showMessageDialog(null, "密码不正确！");
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -168,7 +170,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		{
 			this.dispose();
 			d.dispose();
-			connect = new ClientConnect();
+			connect = new ClientConnect(s);
 			if(!connect.getFlag())  System.exit(0);
 			else
 			{
@@ -179,7 +181,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		{
 			this.dispose();
 			d.dispose();
-			connect = new ClientConnect();
+			connect = new ClientConnect(s);
 			new Question(connect.getS());
 		}
 		
@@ -198,7 +200,7 @@ public class Login  extends JFrame  implements ActionListener,MouseListener ,Mou
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == Event.ENTER)
 		{
-			connect = new ClientConnect();
+			connect = new ClientConnect(s);
 			if(!connect.getFlag())  System.exit(0);
 			else 
 			{

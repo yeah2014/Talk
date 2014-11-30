@@ -2,6 +2,8 @@ package common;
 
 import java.io.Serializable;
 
+import javax.sql.RowSet;
+
 public class Message implements Serializable{
 
 	/**
@@ -12,7 +14,7 @@ public class Message implements Serializable{
 	private String towho;
 	private String message;
 	private String sendtime;
-
+	private RowSet record;
 	public String getFromwho() {
 		return fromwho;
 	}
@@ -38,5 +40,11 @@ public class Message implements Serializable{
 
 		SendTime st = new SendTime();
 		this.sendtime = st.year+"."+st.month+"."+st.day+" "+st.hour+":"+st.minute;
+	}
+	public RowSet getRecord() {
+		return record;
+	}
+	public void setRecord(RowSet record) {
+		this.record = record;
 	}
 }

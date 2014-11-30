@@ -10,9 +10,10 @@ import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
 import common.MessageType;
 import control.ManageThread;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.*;
-public class WinChat extends JFrame implements ActionListener,WindowListener{
+public class WinChat extends JFrame implements ActionListener,WindowListener,KeyListener{
 
 	/**
 	 * 
@@ -24,8 +25,8 @@ public class WinChat extends JFrame implements ActionListener,WindowListener{
 	JScrollPane jsp,nojsp;
 	JButton close,send,record;
 	Socket s;
-	String fromwho;
-	String towho;
+	public String fromwho;
+	public String towho;
 	String message;
 	public static void main(String []agr){
 		new WinChat(null,null);
@@ -103,24 +104,44 @@ public class WinChat extends JFrame implements ActionListener,WindowListener{
 		}
 		else if (e.getSource() == send)
 		{
-			message = this.edit.getText();
-			this.noedit.append(fromwho+": "+message+"\n");
 			try {
+			message = this.edit.getText();
+			this.edit.setText("");
+			if(message.length()!=0)
+			{
+				
 				MessageType m = new MessageType();
 				m.setFlag(2);
 				m.setId(fromwho);
 				m.Message.setFromwho(fromwho);
 				m.Message.setTowho(towho);
 				m.Message.setMessage(message);
-				System.out.println(fromwho+"¶Ô"+towho+"Ëµ"+message+"\n");
+				m.Message.setSendtime();
 				ObjectOutputStream oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(fromwho).s.getOutputStream()); 
 				oos.writeObject(m);
+				this.noedit.setFont(new Font("ÑÅºÚ",Font.BOLD,10));
+				this.noedit.append(fromwho+"  "+m.Message.getSendtime()+"\n");
+				this.noedit.setFont(new Font("ÑÅºÚ",Font.BOLD,20));
+				this.noedit.append(message+"\n");
+			}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}
 		else if(e.getSource() == record)
 		{
+			MessageType m = new MessageType();
+			m.setFlag(10);
+			m.Message.setFromwho(fromwho);
+			m.Message.setTowho(towho);
+			ObjectOutputStream oos;
+			try {
+				oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(fromwho).s.getOutputStream());
+				oos.writeObject(m);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
 			
 		}
 	}
@@ -145,6 +166,46 @@ public class WinChat extends JFrame implements ActionListener,WindowListener{
 	}
 
 	public void windowDeactivated(WindowEvent e) {
+	}
+
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == Event.ENTER)
+		{
+			try {
+				message = this.edit.getText();
+				this.edit.setText("");
+				if(message.length()!=0)
+				{
+					
+					MessageType m = new MessageType();
+					m.setFlag(2);
+					m.setId(fromwho);
+					m.Message.setFromwho(fromwho);
+					m.Message.setTowho(towho);
+					m.Message.setMessage(message);
+					m.Message.setSendtime();
+					ObjectOutputStream oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(fromwho).s.getOutputStream()); 
+					oos.writeObject(m);
+					this.noedit.setFont(new Font("ÑÅºÚ",Font.BOLD,10));
+					this.noedit.append(fromwho+"  "+m.Message.getSendtime()+"\n");
+					this.noedit.setFont(new Font("ÑÅºÚ",Font.BOLD,20));
+					this.noedit.append(message+"\n");
+				}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+		}
+		
 	}
 	
 }
