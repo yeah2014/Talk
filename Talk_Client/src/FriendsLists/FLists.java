@@ -19,7 +19,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Vector;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +31,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
-
 import view.WinChat;
 import common.Friends;
 import common.MessageType;
@@ -76,9 +74,9 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 	   this.U=U;
 	   this.myaccount = U.Userdata.getId();
 //		 组件要的图片
-		 ImageIcon headimage = new ImageIcon("src/image/touxiang.jpg");
-		 ImageIcon min = new ImageIcon("src/image/min.png");
-		 ImageIcon exit = new ImageIcon("src/image/exit.png");
+		 ImageIcon headimage = new ImageIcon(FLists.class.getResource("/image/touxiang.jpg"));
+		 ImageIcon min = new ImageIcon(FLists.class.getResource("/image/min.png"));
+		 ImageIcon exit = new ImageIcon(FLists.class.getResource("/image/exit.png"));
 	 
 //		 实例化面板组件
 		 back  = new JPanel();
@@ -168,11 +166,11 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 	   JPanel jj = new JPanel();
 	   jj.setOpaque(false);
 	   jj.setLayout(new BorderLayout());
-	   root1=new IconNode(new ImageIcon("src/image/qq1.png"),"我的好友",true); 
-	   root2=new IconNode(new ImageIcon("src/image/qq1.png"),"我的同学",true); 
-	   root3=new IconNode(new ImageIcon("src/image/qq1.png"),"我的家人",true);
-	   root4=new IconNode(new ImageIcon("src/image/qq1.png"),"我的老师",true);
-	   root5=new IconNode(new ImageIcon("src/image/qq1.png"),"特别的",true);
+	   root1=new IconNode(new ImageIcon(FLists.class.getResource("/image/qq1.png")),"我的好友",true); 
+	   root2=new IconNode(new ImageIcon(FLists.class.getResource("/image/qq1.png")),"我的同学",true); 
+	   root3=new IconNode(new ImageIcon(FLists.class.getResource("/image/qq1.png")),"我的家人",true);
+	   root4=new IconNode(new ImageIcon(FLists.class.getResource("/image/qq1.png")),"我的老师",true);
+	   root5=new IconNode(new ImageIcon(FLists.class.getResource("/image/qq1.png")),"特别的",true);
 	   hash.put(root1, 1); hash1.put("1", root1);
 	   hash.put(root2, 2); hash1.put("2", root2);
 	   hash.put(root3, 3); hash1.put("3", root3);
@@ -279,8 +277,8 @@ public class FLists extends JFrame  implements ActionListener,MouseListener ,Mou
 	   tree.setRootVisible(true);
 	  // DefaultTreeCellRenderer cellRenderer = new DefaultTreeCellRenderer();
 	   DefaultTreeCellRenderer  cellRenderer=(DefaultTreeCellRenderer)tree.getCellRenderer();//获取该树的Renderer  
-	   cellRenderer.setClosedIcon(new ImageIcon("img/xiaotouxiang.jpg"));//关闭打开图标 
-	   cellRenderer.setOpenIcon(new ImageIcon("img/xiaotouxiang.jpg"));//设置展开图标
+//	   cellRenderer.setClosedIcon(new ImageIcon("img/xiaotouxiang.jpg"));//关闭打开图标 
+//	   cellRenderer.setOpenIcon(new ImageIcon("img/xiaotouxiang.jpg"));//设置展开图标
 	   cellRenderer.setBackgroundNonSelectionColor(new Color(0, 0, 0, 0));
 	   cellRenderer.setBackgroundSelectionColor(new Color(0, 0, 0, 0));
 	   tree.addMouseListener(this);

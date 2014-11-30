@@ -98,7 +98,7 @@ public class ServerView extends JFrame implements ActionListener {
 	public void setimg()
 	{
 		   ((JPanel)this.getContentPane()).setOpaque(false);
-		   ii = new  ImageIcon("D://Desktop/222.jpg");
+		   ii = new  ImageIcon(ServerView.class.getResource("222.jpg"));
 		   JLabel background = new JLabel(ii);
 		   this.getLayeredPane().add(background,new Integer(Integer.MIN_VALUE));
 		   background.setBounds(0, 0, ii.getIconWidth(), ii.getIconHeight());

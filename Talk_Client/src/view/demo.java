@@ -32,9 +32,9 @@ public class demo extends JFrame  implements ActionListener,MouseListener ,Mouse
 			 {
 				 this.s = s;
 //				 组件要的图片
-				 ImageIcon headimage = new ImageIcon("D://Desktop/course/img/touxiang.jpg");
-				 ImageIcon min = new ImageIcon("D://Desktop/course/img/min.png");
-				 ImageIcon exit = new ImageIcon("D://Desktop/course/img/exit.png");
+				 ImageIcon headimage = new ImageIcon(demo.class.getResource("/image/touxiang.jpg"));
+				 ImageIcon min = new ImageIcon(demo.class.getResource("/image/min.png"));
+				 ImageIcon exit = new ImageIcon(demo.class.getResource("/image/exit.png"));
 			 
 //				 实例化面板组件
 				 back  = new JPanel();

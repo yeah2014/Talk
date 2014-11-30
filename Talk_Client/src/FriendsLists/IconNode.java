@@ -1,6 +1,8 @@
 package FriendsLists;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import view.demo;
 public class IconNode extends DefaultMutableTreeNode
 {
 	/**
@@ -19,7 +21,7 @@ public class IconNode extends DefaultMutableTreeNode
 	{
 		super();
 		System.out.println("Í·ÏñÎª"+icon);
-		if(icon==1) this.icon = new ImageIcon("src/image/test.png");
+		if(icon==1) this.icon = new ImageIcon(demo.class.getResource("/image/test.png"));
 		this.setText(text);
 		this.b=b;
 	}
