@@ -1,9 +1,6 @@
 package control;
 
 import java.net.Socket;
-
-import javax.swing.JOptionPane;
-
 import view.*;
 
 public class MyClient {

@@ -1,13 +1,8 @@
 package control;
 import java.net.*;
 import java.util.ArrayList;
-
 import common.*;
-
 import java.io.*;
-
-import javax.swing.JOptionPane;
-
 import mysql.*;
 import view.*;
 public class Connect extends Thread{

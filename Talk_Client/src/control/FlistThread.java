@@ -12,6 +12,7 @@ import common.*;
 public class FlistThread extends Thread{
 	public Socket s;
 	FLists f;
+	public boolean run = true;
 	public FlistThread(Socket s)
 	{
 		this.s=s;
@@ -19,12 +20,11 @@ public class FlistThread extends Thread{
 	public void run()
 	{
 		
-		while(true)
+		while(run)
 		{
 		try {
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			MessageType U = (MessageType)ois.readObject();
-			//Analysis.isAnalysis(U);
 			switch(U.getFlag())
 			{
 				case 2:

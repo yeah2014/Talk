@@ -71,11 +71,7 @@ public class WinChat extends JFrame implements ActionListener,WindowListener,Key
 		record.addActionListener(this);
 		 try 
 		   { 
-			   //UIManager.setLookAndFeel( new SubstanceBusinessBlackSteelLookAndFeel());
-			   //UIManager.setLookAndFeel(new SubstanceGreenMagicLookAndFeel());
-			   //UIManager.setLookAndFeel( new SubstanceBusinessBlueSteelLookAndFeel());
 			   UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
-
 			   SwingUtilities.updateComponentTreeUI(big);  
 			   SwingUtilities.updateComponentTreeUI(min);
 			   SwingUtilities.updateComponentTreeUI(li);

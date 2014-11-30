@@ -1,7 +1,6 @@
 package control;
 
 import java.net.*;
-import java.io.*;
 
 import javax.swing.JOptionPane;
 
@@ -27,7 +26,6 @@ public class ClientConnect {
 			else flag = true;
 
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		}

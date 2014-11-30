@@ -1,8 +1,5 @@
 package control;
 import java.util.HashMap;
-
-import javax.swing.JOptionPane;
-
 import FriendsLists.FLists;
 import view.*;
 public class ManageThread {

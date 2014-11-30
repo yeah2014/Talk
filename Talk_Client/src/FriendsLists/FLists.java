@@ -12,6 +12,8 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -35,7 +37,7 @@ import view.WinChat;
 import common.Friends;
 import common.MessageType;
 import control.ManageThread;
-public class FLists extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener
+public class FLists extends JFrame  implements ActionListener,MouseListener ,MouseMotionListener,WindowListener
 {
 	/**
 	 * 
@@ -431,6 +433,8 @@ public void actionPerformed(ActionEvent e) {
 	{
 		try {
 			String input = JOptionPane.showInputDialog(null,"∫√”—’ ∫≈","ÃÌº”∫√”—",JOptionPane.OK_CANCEL_OPTION);
+			if(!input.equals(""))
+			{
 			ObjectOutputStream oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(myaccount).s.getOutputStream()); 
 			MessageType m = new MessageType();
 			m.setFlag(7);
@@ -438,7 +442,7 @@ public void actionPerformed(ActionEvent e) {
 			m.Users.setId(input);
 			m.Users.setSex(String.valueOf(group));
 			oos.writeObject(m);
-			
+			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
@@ -497,5 +501,43 @@ public void leavelinefriend(MessageType U)
 	hash1.get(String.valueOf(where)).add(hashleaveline.get(U.getId()));
 	numberingroup[where]--;
 	tree.updateUI();
+}
+
+public void windowOpened(WindowEvent e) {
+	
+}
+
+public void windowClosing(WindowEvent e) {
+	try {
+		ManageThread.Getthreadfrommap(myaccount).run=false;
+		ObjectOutputStream oos = new ObjectOutputStream(ManageThread.Getthreadfrommap(myaccount).s.getOutputStream()); 
+		MessageType mts=new MessageType();
+		mts.setId(myaccount);
+		mts.setFlag(11);
+		oos.writeObject(mts);
+		System.exit(0);
+	} catch (IOException e1) {
+		e1.printStackTrace();
+	}
+}
+
+public void windowClosed(WindowEvent e) {
+	
+}
+
+public void windowIconified(WindowEvent e) {
+	
+}
+
+public void windowDeiconified(WindowEvent e) {
+	
+}
+
+public void windowActivated(WindowEvent e) {
+	
+}
+
+public void windowDeactivated(WindowEvent e) {
+	
 }
 }

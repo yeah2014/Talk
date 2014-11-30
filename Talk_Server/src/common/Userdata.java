@@ -2,9 +2,6 @@ package common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
 /*
  * 这是用户的具体信息
  */

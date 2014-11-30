@@ -1,13 +1,9 @@
 package control;
 
 import java.net.*;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.io.*;
-
 import javax.sql.RowSet;
-import javax.swing.JOptionPane;
-
 import mysql.Dao;
 import view.ServerView;
 import common.*;
@@ -28,8 +24,36 @@ public class EachThread extends Thread{
 			while(run)
 			{
 				try{
+					try{
 					ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-					MessageType m = (MessageType) ois.readObject();
+					m = (MessageType) ois.readObject();
+					}catch(Exception e){
+						//线程关闭。
+						e.printStackTrace();
+						System.out.println("服务端线程关闭");
+						this.run = false;
+						ManageConnectThread.ReMoveMap(fw);
+						ArrayList<String> al;
+						try {
+							al = Dao.whoesfriends(fw);
+							for(int i=0;i<al.size();i++)
+							{
+								EachThread eett =ManageConnectThread.GetFromMap(al.get(i));
+								if(eett!=null)
+								{
+									MessageType mt = new MessageType();
+									mt.setFlag(5);
+									mt.setId(fw);
+									mt.Users.setId(al.get(i));
+									ObjectOutputStream ooss = new ObjectOutputStream(eett.s.getOutputStream());
+									ooss.writeObject(mt);
+									
+								}
+							}
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
 					System.out.print("到达EachThread,成功接收客户端发来的包");
 					switch(m.getFlag())
 					{
@@ -61,7 +85,6 @@ public class EachThread extends Thread{
 							break;
 						case 8:	
 							et = ManageConnectThread.GetFromMap(m.getId());
-							if(et==null) JOptionPane.showMessageDialog(null, "nullll");
 							oos = new ObjectOutputStream(et.s.getOutputStream());
 							if(Dao.addfriends(m.getId(), m.Users.getId(),Integer.parseInt(m.Users.getSex())))
 							{
@@ -98,31 +121,13 @@ public class EachThread extends Thread{
 							ObjectOutputStream oos2 = new ObjectOutputStream(s.getOutputStream());
 							oos2.writeObject(m);
 							break;
+						case 11:
+							
+							break;
 					}
 					} catch (Exception e1) {
 						e1.printStackTrace();
-						this.run = false;
-						ManageConnectThread.ReMoveMap(fw);
-						ArrayList<String> al;
-						try {
-							al = Dao.whoesfriends(fw);
-							for(int i=0;i<al.size();i++)
-							{
-								EachThread eett =ManageConnectThread.GetFromMap(al.get(i));
-								if(eett!=null)
-								{
-									MessageType mt = new MessageType();
-									mt.setFlag(5);
-									mt.setId(fw);
-									mt.Users.setId(al.get(i));
-									ObjectOutputStream oos = new ObjectOutputStream(eett.s.getOutputStream());
-									oos.writeObject(mt);
-									
-								}
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
+						
 					}
 				
 				

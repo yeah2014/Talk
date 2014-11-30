@@ -31,7 +31,6 @@ public class MessageType implements Serializable{
 	public Message Message = new Message();
 	public Userdata Userdata = new Userdata();
 	public Forget Forget = new Forget();
-	public Onlinepeople Onlinepeople = new Onlinepeople();
 	public int getFlag() {
 		return flag;
 	}

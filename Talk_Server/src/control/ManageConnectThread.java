@@ -1,8 +1,6 @@
 package control;
 
 import java.util.HashMap;
-import java.io.ObjectOutputStream;
-import java.net.*;
 
 public class ManageConnectThread {
 //	创建一个静态的hashmap
