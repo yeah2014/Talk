@@ -26,10 +26,12 @@ public class Dao {
     //String sql = "create table  user_info (u_id int auto_increment primary key,u_name varchar(20) ,u_pass varchar(20),u_ques varchar(40),u_anser varchar(40),u_sex varchar(4),u_sign varchar(60))";
 	// 构造器
 
+	public Dao(){
+		papa=JOptionPane.showInputDialog("数据库密码？");
+		Dao.password=papa;
+	}
 	public static  Connection    dao1() {
 		try {
-			papa=JOptionPane.showInputDialog("数据库密码？");
-			Dao.password=papa;
 			Class.forName(driver); // 加载数据库
 			conn = DriverManager.getConnection(url, name, password);// 连接数据库
 			
