@@ -17,16 +17,19 @@ import com.sun.rowset.CachedRowSetImpl;
 import common.*;
 
 public class Dao {
-	private static String driver = "com.mysql.jdbc.Driver"; // 定义驱动
-	private static String url = "jdbc:mysql://127.0.0.1:3306/chat"; // 定义URL
-	private static String name = "root"; // 定义用户名
-	private static String password = "0000"; // 定义密码
-	private static Connection conn = null; // 数据库连接
-	
+	static String driver = "com.mysql.jdbc.Driver"; // 定义驱动
+	static String url = "jdbc:mysql://127.0.0.1:3306/chat"; // 定义URL
+	static String name = "root"; // 定义用户名
+	static String password = "0000"; // 定义密码
+	static Connection conn = null; // 数据库连接
+	static String papa ;
     //String sql = "create table  user_info (u_id int auto_increment primary key,u_name varchar(20) ,u_pass varchar(20),u_ques varchar(40),u_anser varchar(40),u_sex varchar(4),u_sign varchar(60))";
 	// 构造器
+
 	public static  Connection    dao1() {
 		try {
+			papa=JOptionPane.showInputDialog("数据库密码？");
+			Dao.password=papa;
 			Class.forName(driver); // 加载数据库
 			conn = DriverManager.getConnection(url, name, password);// 连接数据库
 			
