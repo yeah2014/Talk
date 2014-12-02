@@ -14,7 +14,7 @@ public class Connect extends Thread{
 	public void run()
 	{
 		try {
-			new Dao();
+		new Dao();
 		Dao.dao1();
 		ss = new ServerSocket(8888);	
 		ServerView.appendtoserver("服务器在8888端口监听中......");
