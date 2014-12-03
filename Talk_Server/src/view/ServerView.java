@@ -9,7 +9,7 @@ import control.*;
 public class ServerView extends JFrame implements ActionListener {
 
 	/**
-	 * 
+	 * 服务端开启的图形界面
 	 */
 	private Connect C = null;
 	private static final long serialVersionUID = 1L;
@@ -18,10 +18,6 @@ public class ServerView extends JFrame implements ActionListener {
 	ImageIcon ii;
 	public static JTextArea ja=null;
 	static JScrollPane jsp=null;
-	public static void main(String[] ag)
-	{
-		new ServerView();
-	}
 	public ServerView()
 	{
 		//设置背景图片
@@ -36,7 +32,7 @@ public class ServerView extends JFrame implements ActionListener {
 		ja = new JTextArea(ii.getIconHeight()/35, ii.getIconWidth()/15);
 		ja.setLineWrap(true);
 		ja.setFont(new Font("楷体",Font.BOLD,20));
-		ja.setForeground(Color.white);
+		ja.setForeground(Color.BLACK);
 		
 		jsp = new JScrollPane(ja);
 		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -95,6 +91,7 @@ public class ServerView extends JFrame implements ActionListener {
 			
 		}
 	}
+	//设置背景图片
 	public void setimg()
 	{
 		   ((JPanel)this.getContentPane()).setOpaque(false);
@@ -104,7 +101,7 @@ public class ServerView extends JFrame implements ActionListener {
 		   background.setBounds(0, 0, ii.getIconWidth(), ii.getIconHeight());
 	}
 	
-
+	//服务端显示信息的接口
 	public static void appendtoserver(String s)
 	{
 		//System.out.println(s);

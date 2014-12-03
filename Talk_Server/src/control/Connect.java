@@ -1,3 +1,7 @@
+/*
+ * 服务端后台接收端
+ * 处理登录，注册，忘记密码
+ */
 package control;
 import java.net.*;
 import java.util.ArrayList;
@@ -7,7 +11,6 @@ import mysql.*;
 import view.*;
 public class Connect extends Thread{
 
-	
 	 ServerSocket ss;
 	 Socket s;
 	 
@@ -26,12 +29,15 @@ public class Connect extends Thread{
 			MessageType m = (MessageType) ois.readObject();
 			switch(m.getFlag())
 			{
+				//处理登录
 				case 1 : 
+					//从数据库中提取资料判断帐号密码是否正确
 					if(Dao.login(m.Users.getId(), m.Users.getPassword()))
 					{
 						MessageType U = Dao.personInformation(m.Users.getId());
 						U.setFlag(1);
 						U.setId(m.Users.getId());
+						//获取该用户所有好友基本信息
 						ArrayList<String> al = Dao.whoesfriends(m.Users.getId());
 						for(int i=0;i<al.size();i++)
 						{
@@ -56,6 +62,7 @@ public class Connect extends Thread{
 						}
 						ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 						oos.writeObject(U);
+						//创建并开启线程
 						EachThread et = new EachThread(s,m.Users.getId());
 						et.start();
 						ManageConnectThread.AddToMap(m.Users.getId(), et);
@@ -73,7 +80,7 @@ public class Connect extends Thread{
 				case 2 :
 					
 				case 3 :
-					
+					//处理注册
 				case 4 :
 					if(Dao.queryAccount(m.Users.getId()) == false)
 					{
@@ -87,6 +94,7 @@ public class Connect extends Thread{
 					ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 					oos.writeObject(m);
 					break;
+					//处理找回密码
 				case 5 :
 					String password = Dao.findAnser(m.Forget);
 					
@@ -103,16 +111,9 @@ public class Connect extends Thread{
 					oos1.writeObject(m);
 					break;
 					
+				}
 			}
-			
-			
-			
-			//Analysis.isAnalysis(s,ois,oos);
-			
-			
-		}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(0);
 		}

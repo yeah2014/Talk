@@ -1,3 +1,6 @@
+/*
+ * 每个用户单独对应的一个线程
+ */
 package control;
 
 import java.net.*;
@@ -28,6 +31,7 @@ public class EachThread extends Thread{
 					ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 					m = (MessageType) ois.readObject();
 					}catch(Exception e){
+						//处理异常
 						//线程关闭。
 						e.printStackTrace();
 						System.out.println("服务端线程关闭");
@@ -55,8 +59,10 @@ public class EachThread extends Thread{
 						}
 					}
 					System.out.print("到达EachThread,成功接收客户端发来的包");
+					//对接收到的对象进行判断
 					switch(m.getFlag())
 					{
+						//普通消息对象，实行转发操作
 						case 2:
 							fw = m.Message.getFromwho();
 							ServerView.appendtoserver("来自"+m.Message.getFromwho()+"的话："+m.Message.getMessage());
@@ -65,7 +71,7 @@ public class EachThread extends Thread{
 							oos.writeObject(m);
 							Dao.ChaRu(m.Message.getFromwho(), m.Message.getTowho(), m.Message.getMessage(), m.Message.getSendtime(), null);
 							break;
-							
+						//好友添加，提醒对方
 						case 7:
 							if(!Dao.isperson(m.Users.getId()))
 							{
@@ -78,11 +84,13 @@ public class EachThread extends Thread{
 							oos = new ObjectOutputStream(et.s.getOutputStream());
 							oos.writeObject(m);
 							break;
+						//添加好友失败，返回信息给对方
 						case 9:
 							et = ManageConnectThread.GetFromMap(m.getId());
 							oos = new ObjectOutputStream(et.s.getOutputStream());
 							oos.writeObject(m);
 							break;
+						//添加好友成功
 						case 8:	
 							et = ManageConnectThread.GetFromMap(m.getId());
 							oos = new ObjectOutputStream(et.s.getOutputStream());
@@ -115,14 +123,12 @@ public class EachThread extends Thread{
 								oos1.writeObject(m);
 							}
 							break;
+						//聊天记录查找
 						case 10: 
 							RowSet record =Dao.chazhao(m.Message.getFromwho(), m.Message.getTowho());
 							m.Message.setRecord(record);
 							ObjectOutputStream oos2 = new ObjectOutputStream(s.getOutputStream());
 							oos2.writeObject(m);
-							break;
-						case 11:
-							
 							break;
 					}
 					} catch (Exception e1) {

@@ -23,6 +23,7 @@ public class MessageType implements Serializable{
 	 * 4 通知在线  5通知离线
 	 * flag = 7 , 添加好友
 	 * flag = 8, 添加好友成功
+	 * 9添加好友失败
 	 */
 	private static final long serialVersionUID = 1L;
 	private int flag;
