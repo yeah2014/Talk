@@ -1,3 +1,10 @@
+/*
+ * 管理线程，
+ * 3个哈希表：
+ * hash 用于储存每个聊天窗口
+ * hashs 用于得到后台接收器，主要为了得到其中的socket
+ * hashss 仅仅用于得到当前这个好友列表，操作好友上下线，消息提醒等等功能
+ */
 package control;
 import java.util.HashMap;
 import FriendsLists.FLists;

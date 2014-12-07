@@ -1,3 +1,16 @@
+/*
+ * 好友列表类
+ * 1.借用demo的代码
+ * 2.用六个哈希表，（二级节点：分组     三级节点：好友名单）：
+ * （1）hash ：<IconNode, Integer> 
+ * 		主要利用鼠标点击获取的节点得到对应的分组标号，方便于实现发送添加好友请求功能
+ * （2）hash1:<String, IconNode>
+ * 		与（1）相反，方便于实现把好友放到相应分组上
+ * （3）hashonline和hashleaveline:<String, IconNode>
+ * 		保存对应好友的节点，方便实现好友上线下线的移动
+ * (4) map1和map2分别存有在线和离线好友的资料
+ * 		主用待开发用途
+ */
 package FriendsLists;
 
 import java.awt.BorderLayout;
@@ -60,7 +73,9 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 	JMenuItem delItem;
 	JMenuItem editItem;
 	IconNode node;
+	//二级节点（分组）：5个
 	IconNode root1, root2, root3, root4, root5;
+	//
 	HashMap<IconNode, Integer> hash = new HashMap<IconNode, Integer>();
 	HashMap<String, IconNode> hash1 = new HashMap<String, IconNode>();
 	HashMap<String, IconNode> hashonline = new HashMap<String, IconNode>();
@@ -74,6 +89,9 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 	public FLists(MessageType U) {
 		this.U = U;
 		this.myaccount = U.Userdata.getId();
+/*
+ * 模板代码：
+ */
 		// 组件要的图片
 		ImageIcon headimage = new ImageIcon(
 				FLists.class.getResource("/image/touxiang.jpg"));
@@ -157,6 +175,12 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 设置可见
 		this.setVisible(true);
+		
+/*
+ * 模板代码结束
+ */
+		//界面的下半部分：
+		//右键菜单栏
 		popMenu = new JPopupMenu();
 		popMenu1 = new JPopupMenu();
 		addItem = new JMenuItem("添加");
@@ -168,9 +192,11 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 		addItem.addActionListener(this);
 		delItem.addActionListener(this);
 		editItem.addActionListener(this);
+		//大面板jj
 		JPanel jj = new JPanel();
 		jj.setOpaque(false);
 		jj.setLayout(new BorderLayout());
+		//实例化二级节点
 		root1 = new IconNode(new ImageIcon(
 				FLists.class.getResource("/image/qq1.png")), "我的好友", true);
 		root2 = new IconNode(new ImageIcon(
@@ -507,7 +533,7 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 		tree.updateUI();
 
 	}
-
+	//消息提醒
 	public void remindtofl(MessageType U) {
 		vt.add(U);
 		switch (U.getFlag()) {
@@ -519,7 +545,7 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 			break;
 		}
 	}
-
+		//好友上线向上移操作
 	public void onlinefriend(MessageType U) {
 
 		Friends fs = map2.remove(U.getId());
@@ -534,7 +560,7 @@ public class FLists extends JFrame implements ActionListener, MouseListener,
 				numberingroup[where]);
 		tree.updateUI();
 	}
-
+	//好友离线节点向下移操作
 	public void leavelinefriend(MessageType U) {
 		Friends fs = map1.remove(U.getId());
 		int where = fs.getFlag();

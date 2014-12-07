@@ -21,8 +21,8 @@ import common.*;
 
 public class Dao {
 	static String driver = "com.mysql.jdbc.Driver"; // 定义驱动
-	static String url = "jdbc:mysql://qq864714524.mysql.rds.aliyuncs.com:3306/chat"; // 定义URL
-	static String name = "qq864714524"; // 定义用户名
+	static String url = "jdbc:mysql://localhost:3306/chat"; // 定义URL
+	static String name = "root"; // 定义用户名
 	static String password = "0000"; // 定义密码
 	static Connection conn = null; // 数据库连接
 	static String papa;

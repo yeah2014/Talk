@@ -1,3 +1,6 @@
+/*
+ * адлЛ╢╟©з
+ */
 package view;
 
 import java.awt.*;

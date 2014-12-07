@@ -1,3 +1,6 @@
+/*
+ *在demo中加入相应的文本框构成登录界面
+ */
 package view;
 
 import javax.swing.*;

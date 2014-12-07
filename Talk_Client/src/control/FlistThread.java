@@ -1,3 +1,9 @@
+/*
+ * 
+ */
+/*
+ * 登录后客户端后台总接收
+ */
 package control;
 import view.*;
 

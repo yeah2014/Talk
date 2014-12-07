@@ -1,3 +1,6 @@
+/*
+ * ×¢²á½çÃæ
+ */
 package view;
 import javax.swing.*;
 

@@ -1,3 +1,6 @@
+/*
+ * 模板类，用于多个功能界面
+ */
 package view;
 import javax.swing.*;
 

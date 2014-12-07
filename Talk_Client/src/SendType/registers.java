@@ -1,3 +1,6 @@
+/*
+ * 此类用于把注册内容打包发送及接收确认信息
+ */
 package SendType;
 
 import java.net.*;

@@ -1,3 +1,6 @@
+/*
+ * 此类包找回密码资料的打包发送和接收确认信息
+ */
 package SendType;
 
 import java.net.*;
