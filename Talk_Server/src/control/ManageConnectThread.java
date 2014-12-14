@@ -15,9 +15,10 @@ public class ManageConnectThread {
 	{
 		return (EachThread) hash.get(s);
 	}
-	public static void ReMoveMap(String s)
+	public static EachThread ReMoveMap(String s)
 	{
-		hash.remove(s);
 		System.out.println("remove³É¹¦");
+		return hash.remove(s);
+		
 	}
 }

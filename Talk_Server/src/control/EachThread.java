@@ -54,6 +54,7 @@ public class EachThread extends Thread{
 									
 								}
 							}
+//							ManageConnectThread.ReMoveMap(fw).interrupt();;
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
